@@ -3,103 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>小太陽幼兒園 — 讓每個孩子都閃耀</title>
+    <title>咪咪 & 家田蒙特梭利幼兒園</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
-      :root {
-        --sun: #2d6a4f;
-        --sun-light: #d8f3dc;
-        --sky: #1b4332;
-        --sky-light: #d8f3dc;
-        --grass: #40916c;
-        --warm: #52b788;
-        --cream: #f4faf6;
-        --dark: #1b2e22;
-        --mid: #4a6358;
-        --light-border: #b7dfc8;
-      }
-
-      * {
+      *,
+      *::before,
+      *::after {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
-
       html {
         scroll-behavior: smooth;
       }
 
+      :root {
+        --green: #4a7c59;
+        --green-dark: #2d5a3d;
+        --green-light: #e8f2eb;
+        --green-mid: #6b9e7a;
+        --accent: #8dc26f;
+        --warm: #f5efe0;
+        --warm-dark: #e8dcc8;
+        --text: #1a1a1a;
+        --text-mid: #555;
+        --text-light: #888;
+        --white: #ffffff;
+        --border: #e2eae5;
+        --bg: #fafcfa;
+      }
+
       body {
         font-family: "Noto Sans TC", sans-serif;
-        background: var(--cream);
-        color: var(--dark);
+        background: var(--bg);
+        color: var(--text);
         overflow-x: hidden;
-      }
-
-      /* ── FLOATING SHAPES ── */
-      .shapes {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
-        overflow: hidden;
-      }
-      .shape {
-        position: absolute;
-        border-radius: 50%;
-        opacity: 0.06;
-      }
-      .shape-1 {
-        width: 500px;
-        height: 500px;
-        background: var(--sun);
-        top: -100px;
-        right: -150px;
-        animation: drift1 20s ease-in-out infinite;
-      }
-      .shape-2 {
-        width: 300px;
-        height: 300px;
-        background: var(--sky);
-        bottom: 200px;
-        left: -80px;
-        animation: drift2 25s ease-in-out infinite;
-      }
-      .shape-3 {
-        width: 200px;
-        height: 200px;
-        background: var(--grass);
-        top: 50%;
-        right: 10%;
-        animation: drift1 18s ease-in-out infinite reverse;
-      }
-
-      @keyframes drift1 {
-        0%,
-        100% {
-          transform: translate(0, 0) scale(1);
-        }
-        33% {
-          transform: translate(30px, -20px) scale(1.05);
-        }
-        66% {
-          transform: translate(-20px, 30px) scale(0.95);
-        }
-      }
-      @keyframes drift2 {
-        0%,
-        100% {
-          transform: translate(0, 0);
-        }
-        50% {
-          transform: translate(40px, -30px);
-        }
+        line-height: 1.6;
       }
 
       /* ── NAV ── */
@@ -108,571 +52,741 @@
         top: 0;
         left: 0;
         right: 0;
-        z-index: 100;
-        padding: 0 5%;
-        height: 72px;
+        z-index: 200;
+        height: 68px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(244, 250, 246, 0.9);
-        backdrop-filter: blur(16px);
-        border-bottom: 1px solid var(--light-border);
+        padding: 0 6%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        transition: box-shadow 0.3s;
+      }
+      nav.scrolled {
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
       }
 
-      .nav-logo {
-        font-family: "Noto Serif TC", serif;
-        font-size: 1.3rem;
-        font-weight: 900;
-        color: var(--dark);
+      .nav-brand {
         display: flex;
         align-items: center;
         gap: 10px;
+        text-decoration: none;
       }
-      .nav-logo .sun-icon {
-        width: 36px;
-        height: 36px;
-        background: var(--sun);
-        border-radius: 50%;
+      .nav-brand-icon {
+        width: 38px;
+        height: 38px;
+        background: var(--green-light);
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
-        animation: spin-slow 10s linear infinite;
+        font-size: 1.3rem;
       }
-      @keyframes spin-slow {
-        to {
-          transform: rotate(360deg);
-        }
+      .nav-brand-text {
+        line-height: 1.2;
+      }
+      .nav-brand-text .main {
+        font-family: "Noto Serif TC", serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--text);
+      }
+      .nav-brand-text .sub {
+        font-size: 0.68rem;
+        color: var(--text-light);
+        letter-spacing: 0.02em;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        list-style: none;
+      }
+      .nav-links a {
+        text-decoration: none;
+        font-size: 0.88rem;
+        color: var(--text-mid);
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--green);
       }
 
       .nav-cta {
-        background: var(--sun);
+        background: var(--green);
         color: white;
         border: none;
-        padding: 10px 24px;
-        border-radius: 50px;
+        padding: 10px 22px;
+        border-radius: 8px;
         font-family: "Noto Sans TC", sans-serif;
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         font-weight: 500;
         cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 4px 16px rgba(45, 106, 79, 0.35);
+        transition: all 0.25s;
       }
       .nav-cta:hover {
-        background: #245a42;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(45, 106, 79, 0.45);
+        background: var(--green-dark);
+        transform: translateY(-1px);
       }
 
       /* ── HERO ── */
       .hero {
         min-height: 100vh;
+        padding: 100px 6% 80px;
         display: flex;
         align-items: center;
-        padding: 100px 5% 80px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--warm) 0%, var(--bg) 60%);
+        z-index: 0;
+      }
+
+      .hero-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
         position: relative;
         z-index: 1;
       }
 
-      .hero-inner {
-        max-width: 1100px;
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--green-light);
+        color: var(--green-dark);
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        margin-bottom: 20px;
+        border: 1px solid rgba(74, 124, 89, 0.2);
+      }
+      .hero-badge::before {
+        content: "●";
+        font-size: 0.5rem;
+        color: var(--accent);
+      }
+
+      .hero h1 {
+        font-family: "Noto Serif TC", serif;
+        font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+        font-weight: 900;
+        line-height: 1.25;
+        margin-bottom: 20px;
+        color: var(--text);
+      }
+      .hero h1 .green {
+        color: var(--green);
+      }
+
+      .hero-desc {
+        font-size: 1rem;
+        line-height: 1.9;
+        color: var(--text-mid);
+        margin-bottom: 36px;
+        max-width: 480px;
+      }
+
+      .hero-btns {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 52px;
+      }
+      .btn-main {
+        background: var(--green);
+        color: white;
+        border: none;
+        padding: 13px 28px;
+        border-radius: 8px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.25s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 16px rgba(74, 124, 89, 0.3);
+      }
+      .btn-main:hover {
+        background: var(--green-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(74, 124, 89, 0.4);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--text);
+        border: 1.5px solid var(--border);
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.25s;
+      }
+      .btn-outline:hover {
+        border-color: var(--green);
+        color: var(--green);
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 40px;
+      }
+      .stat h3 {
+        font-family: "Noto Serif TC", serif;
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--green);
+        line-height: 1;
+      }
+      .stat p {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-top: 4px;
+      }
+
+      .hero-image {
+        position: relative;
+      }
+      .hero-img-wrap {
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12);
+        aspect-ratio: 4/3;
+        background: var(--green-light);
+      }
+      .hero-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .hero-img-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #c8dfc8 0%, #a8c8a8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 5rem;
+      }
+      .hero-float-card {
+        position: absolute;
+        bottom: -20px;
+        left: -24px;
+        background: white;
+        border-radius: 16px;
+        padding: 16px 20px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border: 1px solid var(--border);
+      }
+      .float-icon {
+        font-size: 1.8rem;
+      }
+      .float-text .num {
+        font-family: "Noto Serif TC", serif;
+        font-size: 1.3rem;
+        font-weight: 900;
+        color: var(--green);
+      }
+      .float-text .label {
+        font-size: 0.75rem;
+        color: var(--text-light);
+      }
+
+      /* ── SECTION COMMON ── */
+      .section {
+        padding: 96px 6%;
+      }
+      .section-inner {
+        max-width: 1200px;
         margin: 0 auto;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .section-tag {
+        display: inline-block;
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--green);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 12px;
+      }
+      .section-title {
+        font-family: "Noto Serif TC", serif;
+        font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+        font-weight: 700;
+        line-height: 1.35;
+        margin-bottom: 14px;
+      }
+      .section-sub {
+        font-size: 0.92rem;
+        color: var(--text-mid);
+        line-height: 1.8;
+      }
+
+      /* ── NEWS ── */
+      .news {
+        background: white;
+      }
+      .news-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .news-card {
+        border: 1.5px solid var(--border);
+        border-radius: 16px;
+        padding: 28px;
+        transition: all 0.3s;
+        cursor: pointer;
+        background: var(--bg);
+      }
+      .news-card:hover {
+        border-color: var(--green);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 36px rgba(74, 124, 89, 0.1);
+      }
+      .news-date {
+        font-size: 0.78rem;
+        color: var(--green);
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+      .news-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--green-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        margin-bottom: 16px;
+      }
+      .news-title {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        line-height: 1.5;
+      }
+      .news-desc {
+        font-size: 0.85rem;
+        color: var(--text-mid);
+        line-height: 1.8;
+      }
+
+      /* ── PHILOSOPHY ── */
+      .philosophy {
+        background: var(--warm);
+      }
+      .philosophy-inner {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 80px;
         align-items: center;
       }
-
-      .hero-eyebrow {
-        display: inline-flex;
+      .philosophy-img {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+        aspect-ratio: 4/3;
+      }
+      .philosophy-img-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #b8d4b8 0%, #96be96 100%);
+        display: flex;
         align-items: center;
-        gap: 8px;
-        background: var(--sun-light);
-        color: #1b4332;
-        padding: 6px 16px;
-        border-radius: 50px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        margin-bottom: 24px;
-        border: 1px solid rgba(45, 106, 79, 0.25);
+        justify-content: center;
+        font-size: 5rem;
       }
-
-      .hero h1 {
-        font-family: "Noto Serif TC", serif;
-        font-size: clamp(2.4rem, 5vw, 4rem);
-        font-weight: 900;
-        line-height: 1.2;
-        margin-bottom: 24px;
-        color: var(--dark);
+      .philosophy-values {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
       }
-
-      .hero h1 .highlight {
-        color: var(--sun);
-        position: relative;
-        display: inline-block;
-      }
-      .hero h1 .highlight::after {
-        content: "";
-        position: absolute;
-        bottom: 4px;
-        left: 0;
-        right: 0;
-        height: 6px;
-        background: var(--sun-light);
-        border-radius: 3px;
-        z-index: -1;
-      }
-
-      .hero-desc {
-        font-size: 1.05rem;
-        line-height: 1.85;
-        color: var(--mid);
-        margin-bottom: 40px;
-      }
-
-      .hero-actions {
+      .value-item {
         display: flex;
         gap: 16px;
-        align-items: center;
-        flex-wrap: wrap;
+        align-items: flex-start;
+        background: white;
+        border-radius: 14px;
+        padding: 20px;
+        border: 1px solid rgba(74, 124, 89, 0.12);
+        transition: all 0.25s;
       }
-
-      .btn-primary {
-        background: var(--sun);
-        color: white;
-        border: none;
-        padding: 16px 36px;
-        border-radius: 50px;
-        font-family: "Noto Sans TC", sans-serif;
-        font-size: 1rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 6px 24px rgba(45, 106, 79, 0.4);
+      .value-item:hover {
+        box-shadow: 0 8px 24px rgba(74, 124, 89, 0.1);
+        transform: translateX(4px);
+      }
+      .value-icon {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        background: var(--green-light);
         display: flex;
         align-items: center;
-        gap: 8px;
+        justify-content: center;
+        font-size: 1.1rem;
       }
-      .btn-primary:hover {
-        background: #245a42;
-        transform: translateY(-3px);
-        box-shadow: 0 10px 32px rgba(45, 106, 79, 0.5);
+      .value-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .value-desc {
+        font-size: 0.82rem;
+        color: var(--text-mid);
+        line-height: 1.7;
       }
 
-      .btn-secondary {
-        color: var(--dark);
-        text-decoration: none;
-        font-size: 0.95rem;
-        font-weight: 500;
+      /* ── METHODS ── */
+      .methods {
+        background: white;
+      }
+      .methods-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+      .method-card {
+        background: var(--bg);
+        border-radius: 20px;
+        padding: 40px;
+        border: 1.5px solid var(--border);
+        transition: all 0.3s;
+      }
+      .method-card:hover {
+        border-color: var(--green-mid);
+        box-shadow: 0 12px 40px rgba(74, 124, 89, 0.08);
+      }
+      .method-tag {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--green);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 12px;
         display: flex;
         align-items: center;
         gap: 6px;
-        transition: gap 0.2s;
       }
-      .btn-secondary:hover {
-        gap: 10px;
-      }
-
-      /* ── HERO ILLUSTRATION ── */
-      .hero-visual {
-        position: relative;
-      }
-
-      .hero-card {
-        background: white;
-        border-radius: 32px;
-        padding: 40px;
-        box-shadow:
-          0 20px 60px rgba(0, 0, 0, 0.08),
-          0 0 0 1px var(--light-border);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .hero-card::before {
+      .method-tag::before {
         content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 6px;
-        background: linear-gradient(90deg, #2d6a4f, #40916c, #52b788, #74c69d);
+        width: 20px;
+        height: 2px;
+        background: var(--green);
+        border-radius: 1px;
       }
-
-      .big-emoji {
-        font-size: 5rem;
-        text-align: center;
-        display: block;
-        margin-bottom: 24px;
-        animation: bounce 2s ease-in-out infinite;
-      }
-      @keyframes bounce {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-      }
-
-      .stat-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-      }
-
-      .stat-item {
-        background: var(--cream);
-        border-radius: 16px;
-        padding: 20px;
-        text-align: center;
-        border: 1px solid var(--light-border);
-      }
-      .stat-number {
+      .method-title {
         font-family: "Noto Serif TC", serif;
-        font-size: 2rem;
-        font-weight: 900;
-        color: var(--sun);
-        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--text);
       }
-      .stat-label {
-        font-size: 0.78rem;
-        color: var(--mid);
-        margin-top: 4px;
+      .method-desc {
+        font-size: 0.88rem;
+        color: var(--text-mid);
+        line-height: 1.9;
       }
 
       /* ── FEATURES ── */
       .features {
-        padding: 100px 5%;
-        position: relative;
-        z-index: 1;
+        background: var(--bg);
       }
-
-      .section-header {
-        text-align: center;
-        max-width: 600px;
-        margin: 0 auto 64px;
-      }
-
-      .section-tag {
-        display: inline-block;
-        font-size: 0.8rem;
-        font-weight: 500;
-        color: var(--sky);
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        margin-bottom: 16px;
-      }
-
-      .section-title {
-        font-family: "Noto Serif TC", serif;
-        font-size: clamp(1.8rem, 3vw, 2.8rem);
-        font-weight: 700;
-        line-height: 1.3;
-        margin-bottom: 16px;
-      }
-
-      .section-sub {
-        color: var(--mid);
-        line-height: 1.8;
-        font-size: 0.95rem;
-      }
-
       .features-grid {
-        max-width: 1100px;
-        margin: 0 auto;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
+        gap: 20px;
       }
-
       .feature-card {
         background: white;
-        border-radius: 24px;
-        padding: 36px;
-        border: 1px solid var(--light-border);
+        border-radius: 16px;
+        padding: 28px;
+        border: 1px solid var(--border);
         transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
+        text-align: center;
       }
       .feature-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
-        border-color: transparent;
+        border-color: var(--green-mid);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
       }
-
       .feature-icon {
-        width: 56px;
-        height: 56px;
-        border-radius: 16px;
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        background: var(--green-light);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.8rem;
-        margin-bottom: 20px;
+        font-size: 1.5rem;
+        margin: 0 auto 16px;
       }
-      .icon-sun {
-        background: #d8f3dc;
-      }
-      .icon-sky {
-        background: #b7dfc8;
-      }
-      .icon-green {
-        background: #d8f3dc;
-      }
-      .icon-pink {
-        background: #c7f0d8;
-      }
-      .icon-purple {
-        background: #b7dfc8;
-      }
-      .icon-orange {
-        background: #d8f3dc;
-      }
-
       .feature-title {
-        font-family: "Noto Serif TC", serif;
-        font-size: 1.15rem;
+        font-size: 0.95rem;
         font-weight: 700;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
       }
-
       .feature-desc {
-        font-size: 0.88rem;
-        line-height: 1.8;
-        color: var(--mid);
+        font-size: 0.82rem;
+        color: var(--text-mid);
+        line-height: 1.75;
       }
 
-      /* ── TESTIMONIALS ── */
-      .testimonials {
-        background: var(--dark);
-        padding: 100px 5%;
+      /* ── CAMPUS ── */
+      .campus {
+        padding: 96px 6%;
+        background: white;
         position: relative;
-        z-index: 1;
         overflow: hidden;
       }
-      .testimonials::before {
+      .campus::before {
         content: "";
         position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          ellipse at 30% 50%,
-          rgba(45, 106, 79, 0.15) 0%,
-          transparent 70%
-        );
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        background: var(--warm);
+        z-index: 0;
       }
-
-      .testimonials .section-title {
-        color: white;
-      }
-      .testimonials .section-tag {
-        color: #74c69d;
-      }
-      .testimonials .section-sub {
-        color: rgba(255, 255, 255, 0.5);
-      }
-
-      .testimonials-grid {
-        max-width: 1100px;
+      .campus-inner {
+        max-width: 1200px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-      }
-
-      .testimonial-card {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 24px;
-        padding: 32px;
-        transition: all 0.3s;
-      }
-      .testimonial-card:hover {
-        background: rgba(255, 255, 255, 0.08);
-        transform: translateY(-4px);
-      }
-
-      .stars {
-        font-size: 1rem;
-        margin-bottom: 16px;
-      }
-
-      .testimonial-text {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.9rem;
-        line-height: 1.85;
-        margin-bottom: 24px;
-      }
-
-      .testimonial-author {
-        display: flex;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
         align-items: center;
-        gap: 12px;
+        position: relative;
+        z-index: 1;
       }
-
-      .author-avatar {
-        width: 40px;
-        height: 40px;
+      .campus-content {
+      }
+      .campus-tag {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--green);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 10px;
+      }
+      .campus-title {
+        font-family: "Noto Serif TC", serif;
+        font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+        font-weight: 700;
+        margin-bottom: 28px;
+      }
+      .campus-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 36px;
+      }
+      .campus-list li {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+      .campus-list li .check {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        background: var(--green);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      .author-name {
         color: white;
-        font-size: 0.88rem;
-        font-weight: 500;
+        font-size: 0.65rem;
+        margin-top: 2px;
       }
-      .author-role {
-        color: rgba(255, 255, 255, 0.4);
-        font-size: 0.78rem;
+      .campus-list li .check-title {
+        font-weight: 600;
+        margin-bottom: 2px;
       }
-
-      /* ── CTA SECTION ── */
-      .cta-section {
-        padding: 120px 5%;
-        text-align: center;
-        position: relative;
-        z-index: 1;
+      .campus-list li .check-desc {
+        color: var(--text-mid);
+        font-size: 0.83rem;
       }
 
-      .cta-box {
-        max-width: 700px;
-        margin: 0 auto;
-        background: linear-gradient(
-          135deg,
-          #1b4332 0%,
-          #2d6a4f 60%,
-          #40916c 100%
-        );
-        border-radius: 40px;
-        padding: 80px 60px;
-        position: relative;
+      .campus-img {
+        border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 30px 80px rgba(27, 67, 50, 0.4);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12);
+        aspect-ratio: 4/3;
       }
-      .cta-box::before {
-        content: "";
-        position: absolute;
-        top: -40px;
-        right: -40px;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-      }
-      .cta-box::after {
-        content: "";
-        position: absolute;
-        bottom: -60px;
-        left: -60px;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      .cta-emoji {
-        font-size: 3.5rem;
-        display: block;
-        margin-bottom: 24px;
-      }
-
-      .cta-box h2 {
-        font-family: "Noto Serif TC", serif;
-        font-size: 2.2rem;
-        font-weight: 900;
-        color: white;
-        margin-bottom: 16px;
-        position: relative;
-        z-index: 1;
-      }
-
-      .cta-box p {
-        color: rgba(255, 255, 255, 0.85);
-        font-size: 1rem;
-        line-height: 1.8;
-        margin-bottom: 40px;
-        position: relative;
-        z-index: 1;
-      }
-
-      .btn-white {
-        background: white;
-        color: #1b4332;
-        border: none;
-        padding: 16px 40px;
-        border-radius: 50px;
-        font-family: "Noto Sans TC", sans-serif;
-        font-size: 1rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
-        position: relative;
-        z-index: 1;
-        display: inline-flex;
+      .campus-img-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #96c896 0%, #6aae6a 100%);
+        display: flex;
         align-items: center;
-        gap: 8px;
-      }
-      .btn-white:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        justify-content: center;
+        font-size: 6rem;
       }
 
       /* ── FOOTER ── */
       footer {
-        background: #0d1f15;
-        padding: 60px 5% 40px;
-        position: relative;
-        z-index: 1;
+        background: #1a2820;
+        color: rgba(255, 255, 255, 0.75);
+        padding: 72px 6% 36px;
+      }
+      .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 48px;
+        padding-bottom: 48px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        margin-bottom: 36px;
+      }
+      .footer-brand .logo-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .footer-logo-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: var(--green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+      }
+      .footer-logo-text .main {
+        font-family: "Noto Serif TC", serif;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: white;
+      }
+      .footer-logo-text .sub {
+        font-size: 0.65rem;
+        color: rgba(255, 255, 255, 0.4);
+      }
+      .footer-brand p {
+        font-size: 0.82rem;
+        line-height: 1.8;
+        max-width: 260px;
+      }
+      .footer-social {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .social-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.07);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .social-btn:hover {
+        background: var(--green);
       }
 
-      .footer-inner {
-        max-width: 1100px;
+      .footer-col h4 {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 16px;
+      }
+      .footer-col-tag {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 6px;
+      }
+      .footer-col p,
+      .footer-col address {
+        font-style: normal;
+        font-size: 0.8rem;
+        line-height: 1.9;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .footer-col a {
+        color: rgba(255, 255, 255, 0.55);
+        text-decoration: none;
+        font-size: 0.8rem;
+        display: block;
+        margin-bottom: 8px;
+        transition: color 0.2s;
+      }
+      .footer-col a:hover {
+        color: var(--accent);
+      }
+
+      .footer-bottom {
+        max-width: 1200px;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.3);
         flex-wrap: wrap;
-        gap: 32px;
-        padding-bottom: 40px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        margin-bottom: 40px;
+        gap: 12px;
       }
-
-      .footer-logo {
-        font-family: "Noto Serif TC", serif;
-        font-size: 1.2rem;
-        font-weight: 900;
-        color: white;
+      .footer-bottom-links {
+        display: flex;
+        gap: 20px;
       }
-
-      .footer-info {
-        color: rgba(255, 255, 255, 0.4);
-        font-size: 0.85rem;
-        line-height: 1.8;
+      .footer-bottom-links a {
+        color: rgba(255, 255, 255, 0.3);
+        text-decoration: none;
+        transition: color 0.2s;
       }
-
-      .footer-bottom {
-        max-width: 1100px;
-        margin: 0 auto;
-        text-align: center;
-        color: rgba(255, 255, 255, 0.25);
-        font-size: 0.8rem;
+      .footer-bottom-links a:hover {
+        color: rgba(255, 255, 255, 0.6);
       }
 
       /* ── MODAL ── */
       .modal-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(8px);
-        z-index: 1000;
+        z-index: 500;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(6px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -688,305 +802,409 @@
 
       .modal {
         background: white;
-        border-radius: 32px;
+        border-radius: 24px;
         width: 100%;
-        max-width: 560px;
+        max-width: 520px;
         max-height: 90vh;
         overflow-y: auto;
-        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
-        transform: translateY(30px) scale(0.96);
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px) scale(0.97);
         transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        position: relative;
       }
       .modal-overlay.active .modal {
-        transform: translateY(0) scale(1);
+        transform: none;
       }
 
-      .modal-header {
-        padding: 36px 36px 24px;
-        position: relative;
-      }
-      .modal-header::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+      .modal-top {
         height: 5px;
-        background: linear-gradient(90deg, #1b4332, #2d6a4f, #52b788);
-        border-radius: 32px 32px 0 0;
+        background: linear-gradient(
+          90deg,
+          var(--green-dark),
+          var(--green),
+          var(--accent)
+        );
+        border-radius: 24px 24px 0 0;
       }
-
+      .modal-head {
+        padding: 28px 32px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .modal-head h2 {
+        font-family: "Noto Serif TC", serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+      .modal-head p {
+        font-size: 0.82rem;
+        color: var(--text-mid);
+        margin-top: 4px;
+      }
       .modal-close {
-        position: absolute;
-        top: 24px;
-        right: 24px;
-        width: 36px;
-        height: 36px;
-        border: none;
-        background: #f5f5f5;
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
+        border: none;
+        background: #f0f0f0;
         cursor: pointer;
-        font-size: 1.1rem;
+        font-size: 1rem;
+        color: var(--text-mid);
         display: flex;
         align-items: center;
         justify-content: center;
         transition: all 0.2s;
-        color: var(--mid);
+        flex-shrink: 0;
       }
       .modal-close:hover {
-        background: #eee;
+        background: #e0e0e0;
         transform: rotate(90deg);
       }
 
-      .modal-title {
-        font-family: "Noto Serif TC", serif;
-        font-size: 1.6rem;
-        font-weight: 700;
-        margin-bottom: 6px;
-      }
-      .modal-sub {
-        color: var(--mid);
-        font-size: 0.85rem;
-      }
-
       .modal-body {
-        padding: 0 36px 36px;
+        padding: 0 32px 32px;
       }
-
       .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 16px;
       }
-
       label {
         display: block;
-        font-size: 0.85rem;
-        font-weight: 500;
-        margin-bottom: 8px;
-        color: var(--dark);
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--text);
       }
-      label .required {
-        color: var(--warm);
+      label .req {
+        color: #e53935;
         margin-left: 3px;
       }
-
       input,
       select,
       textarea {
         width: 100%;
-        padding: 12px 16px;
-        border: 1.5px solid #e8e8e8;
-        border-radius: 12px;
+        padding: 11px 14px;
+        border: 1.5px solid #e0e0e0;
+        border-radius: 10px;
         font-family: "Noto Sans TC", sans-serif;
-        font-size: 0.9rem;
-        color: var(--dark);
+        font-size: 0.88rem;
+        color: var(--text);
         background: #fafafa;
-        transition: all 0.2s;
         outline: none;
+        transition: all 0.2s;
       }
       input:focus,
       select:focus,
       textarea:focus {
-        border-color: var(--sun);
+        border-color: var(--green);
         background: white;
-        box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
+        box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
       }
-
       textarea {
         resize: vertical;
-        min-height: 90px;
+        min-height: 80px;
       }
-
       .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        gap: 12px;
       }
 
       .submit-btn {
         width: 100%;
-        padding: 16px;
-        background: var(--sun);
+        padding: 14px;
+        background: var(--green);
         color: white;
         border: none;
-        border-radius: 14px;
+        border-radius: 10px;
         font-family: "Noto Sans TC", sans-serif;
-        font-size: 1rem;
-        font-weight: 500;
+        font-size: 0.95rem;
+        font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s;
         margin-top: 8px;
-        box-shadow: 0 6px 20px rgba(45, 106, 79, 0.35);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
+        transition: all 0.25s;
+        box-shadow: 0 4px 16px rgba(74, 124, 89, 0.3);
       }
       .submit-btn:hover:not(:disabled) {
-        background: #245a42;
-        transform: translateY(-2px);
-        box-shadow: 0 10px 28px rgba(45, 106, 79, 0.45);
+        background: var(--green-dark);
+        transform: translateY(-1px);
       }
       .submit-btn:disabled {
-        opacity: 0.7;
+        opacity: 0.6;
         cursor: not-allowed;
       }
 
-      /* ── SUCCESS SCREEN ── */
-      .success-screen {
+      .success-view {
         display: none;
         text-align: center;
-        padding: 60px 36px;
+        padding: 52px 32px;
       }
-      .success-emoji {
-        font-size: 4rem;
-        margin-bottom: 20px;
+      .success-view .emoji {
+        font-size: 3.5rem;
+        margin-bottom: 16px;
         display: block;
       }
-      .success-title {
+      .success-view h3 {
         font-family: "Noto Serif TC", serif;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: 700;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
       }
-      .success-text {
-        color: var(--mid);
+      .success-view p {
+        font-size: 0.85rem;
+        color: var(--text-mid);
         line-height: 1.8;
-        font-size: 0.9rem;
       }
 
       /* ── TOAST ── */
       .toast {
         position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: var(--dark);
+        bottom: 28px;
+        right: 28px;
+        z-index: 9999;
+        background: #1a2820;
         color: white;
-        padding: 14px 22px;
-        border-radius: 14px;
-        font-size: 0.88rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        transform: translateY(100px);
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        transform: translateY(80px);
         opacity: 0;
         transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        z-index: 9999;
-        max-width: 300px;
       }
       .toast.show {
         transform: translateY(0);
         opacity: 1;
       }
       .toast.error {
-        background: #c62828;
+        background: #b71c1c;
+      }
+
+      /* ── REVEAL ── */
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.65s ease,
+          transform 0.65s ease;
+      }
+      [data-reveal].revealed {
+        opacity: 1;
+        transform: none;
+      }
+      [data-reveal-delay="1"] {
+        transition-delay: 0.1s;
+      }
+      [data-reveal-delay="2"] {
+        transition-delay: 0.2s;
+      }
+      [data-reveal-delay="3"] {
+        transition-delay: 0.3s;
       }
 
       /* ── RESPONSIVE ── */
-      @media (max-width: 900px) {
-        .hero-inner {
+      @media (max-width: 960px) {
+        .hero-inner,
+        .philosophy-inner,
+        .campus-inner {
           grid-template-columns: 1fr;
           gap: 48px;
         }
+        .hero-image {
+          display: none;
+        }
+        .news-grid,
         .features-grid {
           grid-template-columns: 1fr 1fr;
         }
-        .testimonials-grid {
+        .methods-grid {
           grid-template-columns: 1fr;
         }
-        .hero-visual {
+        .footer-inner {
+          grid-template-columns: 1fr 1fr;
+        }
+        .campus::before {
           display: none;
+        }
+        .campus {
+          background: white;
         }
       }
       @media (max-width: 640px) {
+        .nav-links {
+          display: none;
+        }
+        .news-grid,
         .features-grid {
           grid-template-columns: 1fr;
         }
         .form-row {
           grid-template-columns: 1fr;
         }
-        .cta-box {
-          padding: 50px 30px;
+        .footer-inner {
+          grid-template-columns: 1fr;
         }
-        .cta-box h2 {
-          font-size: 1.6rem;
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
         }
-        .modal-header,
-        .modal-body {
-          padding-left: 24px;
-          padding-right: 24px;
+        .hero-stats {
+          gap: 24px;
         }
-      }
-
-      /* Entrance animations */
-      [data-reveal] {
-        opacity: 0;
-        transform: translateY(24px);
-        transition:
-          opacity 0.7s ease,
-          transform 0.7s ease;
-      }
-      [data-reveal].revealed {
-        opacity: 1;
-        transform: none;
       }
     </style>
   </head>
   <body>
-    <!-- Background shapes -->
-    <div class="shapes">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="shape shape-3"></div>
-    </div>
-
-    <!-- Navigation -->
-    <nav>
-      <div class="nav-logo">
-        <div class="sun-icon">☀️</div>
-        小太陽幼兒園
-      </div>
-      <button class="nav-cta" onclick="openModal()">預約報名</button>
+    <!-- NAV -->
+    <nav id="navbar">
+      <a class="nav-brand" href="#">
+        <div class="nav-brand-icon">🌱</div>
+        <div class="nav-brand-text">
+          <div class="main">咪咪 & 家田蒙特梭利幼兒園</div>
+          <div class="sub">MImi & Casa Montessori Preschool</div>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#news">關於我們</a></li>
+        <li><a href="#methods">課程介紹</a></li>
+        <li><a href="#campus">校園環境</a></li>
+        <li><a href="#news">招生資訊</a></li>
+      </ul>
+      <button class="nav-cta" onclick="openModal()">預約參觀</button>
     </nav>
 
-    <!-- Hero -->
+    <!-- HERO -->
     <section class="hero">
       <div class="hero-inner">
-        <div class="hero-content" data-reveal>
-          <div class="hero-eyebrow">🌟 2025年秋季招生中</div>
-          <h1>
-            讓孩子在<span class="highlight">愛</span>與<span class="highlight"
-              >快樂</span
-            >中茁壯成長
+        <div class="hero-content">
+          <div class="hero-badge" data-reveal>2026年春季招生開放中</div>
+          <h1 data-reveal data-reveal-delay="1">
+            給孩子一個<br />
+            <span class="green">快樂成長</span>的起點
           </h1>
-          <p class="hero-desc">
-            小太陽幼兒園以全人教育為核心，透過豐富的探索課程、溫暖的師生互動，
-            陪伴每一位孩子發現自己獨特的閃光點，奠定美好人生的第一步。
+          <p class="hero-desc" data-reveal data-reveal-delay="2">
+            在咪咪及家田幼兒園，我們相信每個孩子都是獨一無二的。透過遊戲中學習，培養孩子的創造力、社交能力和自信心。
           </p>
-          <div class="hero-actions">
-            <button class="btn-primary" onclick="openModal()">
-              ✏️ 預約報名
+          <div class="hero-btns" data-reveal data-reveal-delay="2">
+            <button class="btn-main" onclick="openModal()">
+              立即預約參觀 →
             </button>
-            <a href="#features" class="btn-secondary">了解更多 →</a>
+            <button
+              class="btn-outline"
+              onclick="
+                document
+                  .getElementById('methods')
+                  .scrollIntoView({ behavior: 'smooth' })
+              "
+            >
+              了解課程
+            </button>
+          </div>
+          <div class="hero-stats" data-reveal data-reveal-delay="3">
+            <div class="stat">
+              <h3>30+</h3>
+              <p>年辦學經驗</p>
+            </div>
+            <div class="stat">
+              <h3>80+</h3>
+              <p>在校學生</p>
+            </div>
+            <div class="stat">
+              <h3>98%</h3>
+              <p>家長滿意度</p>
+            </div>
           </div>
         </div>
-        <div class="hero-visual" data-reveal>
-          <div class="hero-card">
-            <span class="big-emoji">🧒</span>
-            <div class="stat-grid">
-              <div class="stat-item">
-                <span class="stat-number">18年</span>
-                <span class="stat-label">辦學經驗</span>
+        <div class="hero-image" data-reveal data-reveal-delay="2">
+          <div class="hero-img-wrap">
+            <div class="hero-img-placeholder">🏫</div>
+          </div>
+          <div class="hero-float-card">
+            <div class="float-icon">🏆</div>
+            <div class="float-text">
+              <div class="num">優質幼兒園</div>
+              <div class="label">教育部認證</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section class="section news" id="news">
+      <div class="section-inner">
+        <div class="section-header" data-reveal>
+          <div class="section-tag">公告與活動</div>
+          <h2 class="section-title">了解我們最新的活動與重要訊息</h2>
+        </div>
+        <div class="news-grid">
+          <div class="news-card" data-reveal data-reveal-delay="1">
+            <div class="news-date">2026年2月15日</div>
+            <div class="news-icon">📅</div>
+            <div class="news-title">春季開學典禮</div>
+            <p class="news-desc">
+              歡迎新生加入快樂童年大家庭，讓我們一起開啟美好的學習之旅！
+            </p>
+          </div>
+          <div class="news-card" data-reveal data-reveal-delay="2">
+            <div class="news-date">2025年12月20日</div>
+            <div class="news-icon">🏅</div>
+            <div class="news-title">獲得教育部優良獎</div>
+            <p class="news-desc">
+              榮獲2025年度優質幼兒園認證，感謝家長與老師們的支持與努力。
+            </p>
+          </div>
+          <div class="news-card" data-reveal data-reveal-delay="3">
+            <div class="news-date">2026年3月8日</div>
+            <div class="news-icon">🤸</div>
+            <div class="news-title">親子運動會</div>
+            <p class="news-desc">
+              邀請家長與孩子一同參與戶外運動會，增進親子互動與感情。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHY -->
+    <section class="section philosophy" id="philosophy">
+      <div class="section-inner">
+        <div class="section-header" data-reveal>
+          <div class="section-tag">教育理念</div>
+          <h2 class="section-title">我們的教育方針與核心價值</h2>
+        </div>
+        <div class="philosophy-inner">
+          <div class="philosophy-img" data-reveal>
+            <div class="philosophy-img-placeholder">🎓</div>
+          </div>
+          <div class="philosophy-values">
+            <div class="value-item" data-reveal data-reveal-delay="1">
+              <div class="value-icon">❤️</div>
+              <div>
+                <div class="value-title">愛與關懷</div>
+                <div class="value-desc">
+                  以愛為出發點，給予每個孩子溫暖的照顧與陪伴
+                </div>
               </div>
-              <div class="stat-item">
-                <span class="stat-number">98%</span>
-                <span class="stat-label">家長滿意度</span>
+            </div>
+            <div class="value-item" data-reveal data-reveal-delay="2">
+              <div class="value-icon">💡</div>
+              <div>
+                <div class="value-title">啟發思考</div>
+                <div class="value-desc">培養孩子獨立思考與解決問題的能力</div>
               </div>
-              <div class="stat-item">
-                <span class="stat-number">1:8</span>
-                <span class="stat-label">師生比例</span>
+            </div>
+            <div class="value-item" data-reveal data-reveal-delay="2">
+              <div class="value-icon">😊</div>
+              <div>
+                <div class="value-title">快樂學習</div>
+                <div class="value-desc">在遊戲中學習，讓孩子享受探索的樂趣</div>
               </div>
-              <div class="stat-item">
-                <span class="stat-number">300+</span>
-                <span class="stat-label">畢業校友</span>
+            </div>
+            <div class="value-item" data-reveal data-reveal-delay="3">
+              <div class="value-icon">🌟</div>
+              <div>
+                <div class="value-title">全人發展</div>
+                <div class="value-desc">重視德智體群美五育均衡發展</div>
               </div>
             </div>
           </div>
@@ -994,166 +1212,208 @@
       </div>
     </section>
 
-    <!-- Features -->
-    <section class="features" id="features">
-      <div class="section-header" data-reveal>
-        <div class="section-tag">我們的特色</div>
-        <h2 class="section-title">用心設計，為孩子打造最好的起點</h2>
-        <p class="section-sub">
-          每一個課程設計、每一個空間規劃，都是為了孩子的全方位發展而生。
-        </p>
-      </div>
-      <div class="features-grid">
-        <div class="feature-card" data-reveal>
-          <div class="feature-icon icon-sun">🎨</div>
-          <h3 class="feature-title">藝術創意課程</h3>
-          <p class="feature-desc">
-            透過繪畫、音樂、手作等多元藝術活動，啟發孩子天生的創造力與美感，讓想像力自由飛翔。
-          </p>
+    <!-- METHODS -->
+    <section class="section methods" id="methods">
+      <div class="section-inner">
+        <div class="section-header" data-reveal>
+          <div class="section-tag">教學法</div>
+          <h2 class="section-title">專業教學，啟發無限潛能</h2>
         </div>
-        <div class="feature-card" data-reveal>
-          <div class="feature-icon icon-sky">📚</div>
-          <h3 class="feature-title">雙語學習環境</h3>
-          <p class="feature-desc">
-            中英並重的日常環境，外籍老師每日互動課程，讓孩子自然而然地愛上語言學習。
-          </p>
-        </div>
-        <div class="feature-card" data-reveal>
-          <div class="feature-icon icon-green">🌿</div>
-          <h3 class="feature-title">自然探索教育</h3>
-          <p class="feature-desc">
-            設有室內植物角、戶外生態園，定期自然觀察活動，培養孩子對生命的尊重與好奇心。
-          </p>
-        </div>
-        <div class="feature-card" data-reveal>
-          <div class="feature-icon icon-pink">🍱</div>
-          <h3 class="feature-title">營養午餐供應</h3>
-          <p class="feature-desc">
-            每日由專業廚師烹調均衡餐點，食材新鮮安全，讓孩子吃得健康、長得好。
-          </p>
-        </div>
-        <div class="feature-card" data-reveal>
-          <div class="feature-icon icon-purple">🏃</div>
-          <h3 class="feature-title">體能律動課程</h3>
-          <p class="feature-desc">
-            寬敞的戶外活動場、室內體能室，專業體能老師帶領孩子發展大小肌肉協調能力。
-          </p>
-        </div>
-        <div class="feature-card" data-reveal>
-          <div class="feature-icon icon-orange">👨‍👩‍👧</div>
-          <h3 class="feature-title">親師緊密溝通</h3>
-          <p class="feature-desc">
-            每週聯絡簿、每月親師座談、隨時可溝通的班級群組，讓您時刻掌握孩子成長動態。
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials">
-      <div class="section-header" data-reveal>
-        <div class="section-tag">家長心聲</div>
-        <h2 class="section-title">每一份信任，都是我們最大的動力</h2>
-        <p class="section-sub">聽聽已在小太陽的家庭怎麼說。</p>
-      </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card" data-reveal>
-          <div class="stars">⭐⭐⭐⭐⭐</div>
-          <p class="testimonial-text">
-            「孩子從小班到大班整整三年，每天早上都是開心出門！老師的用心和耐心讓我非常感動，強烈推薦給所有家長。」
-          </p>
-          <div class="testimonial-author">
-            <div class="author-avatar">👩</div>
-            <div>
-              <div class="author-name">陳媽媽</div>
-              <div class="author-role">大班學生家長</div>
-            </div>
+        <div class="methods-grid">
+          <div class="method-card" data-reveal data-reveal-delay="1">
+            <div class="method-tag">教學法</div>
+            <h3 class="method-title">蒙特梭利教學法</h3>
+            <p class="method-desc">
+              我們採用蒙特梭利教學理念，尊重每個孩子的獨特性與發展節奏。透過精心設計的教具與環境，讓孩子在自主探索中建立自信，培養專注力與獨立性。<br /><br />老師扮演觀察者與引導者的角色，適時給予協助，讓孩子成為學習的主人。
+            </p>
           </div>
-        </div>
-        <div class="testimonial-card" data-reveal>
-          <div class="stars">⭐⭐⭐⭐⭐</div>
-          <p class="testimonial-text">
-            「雙語環境真的很有效果，我兒子不到一年就開始主動用英文說話。課程設計很用心，不是填鴨式的學習。」
-          </p>
-          <div class="testimonial-author">
-            <div class="author-avatar">👨</div>
-            <div>
-              <div class="author-name">林爸爸</div>
-              <div class="author-role">中班學生家長</div>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card" data-reveal>
-          <div class="stars">⭐⭐⭐⭐⭐</div>
-          <p class="testimonial-text">
-            「軟硬體設施都很棒，最讓我放心的是老師和行政人員都非常親切，有任何問題都能馬上得到回應。」
-          </p>
-          <div class="testimonial-author">
-            <div class="author-avatar">👩</div>
-            <div>
-              <div class="author-name">王媽媽</div>
-              <div class="author-role">小班學生家長</div>
-            </div>
+          <div class="method-card" data-reveal data-reveal-delay="2">
+            <div class="method-tag">語言環境</div>
+            <h3 class="method-title">雙語環境</h3>
+            <p class="method-desc">
+              提供中英文雙語學習環境，由專業外籍教師與本地教師共同授課。在日常生活中自然融入英語，培養孩子的語言能力與國際視野。<br /><br />我們相信語言學習應該是有趣且生活化的，讓孩子在歌唱、遊戲與互動中愛上學習。
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="cta-box" data-reveal>
-        <span class="cta-emoji">🌟</span>
-        <h2>名額有限，立即預約報名</h2>
-        <p>
-          2025年秋季班招生中，每班名額僅15位。<br />填寫報名表，我們將在24小時內與您聯繫。
-        </p>
-        <button class="btn-white" onclick="openModal()">✏️ 立即預約報名</button>
+    <!-- FEATURES -->
+    <section class="section features" id="features">
+      <div class="section-inner">
+        <div class="section-header" data-reveal>
+          <div class="section-tag">特色與優勢</div>
+          <h2 class="section-title">完善的設施與專業的教學團隊</h2>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card" data-reveal data-reveal-delay="1">
+            <div class="feature-icon">🎨</div>
+            <div class="feature-title">藝術創作</div>
+            <p class="feature-desc">
+              專業美術教室，提供繪畫、手工藝等多元創作活動
+            </p>
+          </div>
+          <div class="feature-card" data-reveal data-reveal-delay="1">
+            <div class="feature-icon">🎵</div>
+            <div class="feature-title">音樂律動</div>
+            <p class="feature-desc">
+              豐富的音樂課程，培養孩子的節奏感與音樂素養
+            </p>
+          </div>
+          <div class="feature-card" data-reveal data-reveal-delay="2">
+            <div class="feature-icon">📚</div>
+            <div class="feature-title">閱讀角落</div>
+            <p class="feature-desc">精選中英文繪本，培養良好的閱讀習慣</p>
+          </div>
+          <div class="feature-card" data-reveal data-reveal-delay="2">
+            <div class="feature-icon">🥗</div>
+            <div class="feature-title">營養餐點</div>
+            <p class="feature-desc">專業營養師設計菜單，使用有機食材烹調</p>
+          </div>
+          <div class="feature-card" data-reveal data-reveal-delay="3">
+            <div class="feature-icon">🛡️</div>
+            <div class="feature-title">安全環境</div>
+            <p class="feature-desc">
+              全方位監控系統，確保孩子在安全的環境中成長
+            </p>
+          </div>
+          <div class="feature-card" data-reveal data-reveal-delay="3">
+            <div class="feature-icon">🌳</div>
+            <div class="feature-title">戶外活動</div>
+            <p class="feature-desc">寬敞的戶外遊戲區，讓孩子盡情探索大自然</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Footer -->
+    <!-- CAMPUS -->
+    <section class="campus" id="campus">
+      <div class="campus-inner">
+        <div class="campus-content" data-reveal>
+          <div class="campus-tag">Campus</div>
+          <h2 class="campus-title">優質校園環境</h2>
+          <ul class="campus-list">
+            <li>
+              <div class="check">✓</div>
+              <div>
+                <div class="check-title">寬敞明亮的教室</div>
+                <div class="check-desc">
+                  每間教室都有充足的自然採光與良好的通風
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="check">✓</div>
+              <div>
+                <div class="check-title">專業遊樂設施</div>
+                <div class="check-desc">符合國際安全標準的戶外遊戲設備</div>
+              </div>
+            </li>
+            <li>
+              <div class="check">✓</div>
+              <div>
+                <div class="check-title">綠意盎然的環境</div>
+                <div class="check-desc">
+                  校園內種植多種植物，讓孩子親近大自然
+                </div>
+              </div>
+            </li>
+          </ul>
+          <button class="btn-main" onclick="openModal()">查看校園環境</button>
+        </div>
+        <div class="campus-img" data-reveal data-reveal-delay="2">
+          <div class="campus-img-placeholder">🌿</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer>
       <div class="footer-inner">
-        <div>
-          <div class="footer-logo">☀️ 小太陽幼兒園</div>
-          <div class="footer-info" style="margin-top: 10px">
-            讓每個孩子都閃耀
+        <div class="footer-brand">
+          <div class="logo-row">
+            <div class="footer-logo-icon">🌱</div>
+            <div class="footer-logo-text">
+              <div class="main">咪咪 & 家田蒙特梭利幼兒園</div>
+              <div class="sub">MImi & Casa Montessori Preschool</div>
+            </div>
+          </div>
+          <p>給孩子一個快樂成長的起點，培養未來的無限可能。</p>
+          <div class="footer-social">
+            <div class="social-btn">📘</div>
+            <div class="social-btn">📷</div>
+            <div class="social-btn">▶️</div>
           </div>
         </div>
-        <div class="footer-info">
-          📍 台北市大安區復興南路一段123號<br />
-          📞 (02) 2700-XXXX<br />
-          🕐 週一至週五 7:30–18:30
+        <div class="footer-col">
+          <div class="footer-col-tag">校區</div>
+          <h4>咪咪蒙特梭利幼兒園</h4>
+          <address>
+            嘉義市東區中山路123號<br />
+            (05) 1234-5678<br />
+            east@happykids.edu.tw
+          </address>
         </div>
-        <button
-          class="btn-primary"
-          onclick="openModal()"
-          style="font-size: 0.9rem; padding: 12px 28px"
-        >
-          預約報名 →
-        </button>
+        <div class="footer-col">
+          <div class="footer-col-tag">校區</div>
+          <h4>家田蒙特梭利幼兒園</h4>
+          <address>
+            嘉義市西區民族路456號<br />
+            (05) 8765-4321<br />
+            west@happykids.edu.tw
+          </address>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-tag">服務時間</div>
+          <h4>週一至週五</h4>
+          <p>07:30 – 18:00</p>
+          <h4 style="margin-top: 14px">週六</h4>
+          <p>08:00 – 12:00</p>
+          <p
+            style="
+              margin-top: 8px;
+              font-size: 0.75rem;
+              color: rgba(255, 255, 255, 0.3);
+            "
+          >
+            週日及國定假日休息
+          </p>
+        </div>
       </div>
-      <div class="footer-bottom">© 2025 小太陽幼兒園 版權所有</div>
+      <div class="footer-bottom">
+        <span
+          >© 2026 咪咪 & 家田蒙特梭利幼兒園 MImi & Casa Montessori Preschool.
+          All rights reserved.</span
+        >
+        <div class="footer-bottom-links">
+          <a href="#">隱私政策</a>
+          <a href="#">服務條款</a>
+          <a href="#">網站地圖</a>
+        </div>
+      </div>
     </footer>
 
-    <!-- Registration Modal -->
+    <!-- MODAL -->
     <div
       class="modal-overlay"
       id="modalOverlay"
       onclick="handleOverlayClick(event)"
     >
-      <div class="modal" id="modal">
+      <div class="modal">
+        <div class="modal-top"></div>
         <div id="formView">
-          <div class="modal-header">
+          <div class="modal-head">
+            <div>
+              <h2>📋 預約參觀</h2>
+              <p>請填寫以下資料，我們將盡快與您聯繫</p>
+            </div>
             <button class="modal-close" onclick="closeModal()">✕</button>
-            <div class="modal-title">📋 預約報名</div>
-            <div class="modal-sub">請填寫以下資料，我們將盡快與您聯繫</div>
           </div>
           <div class="modal-body">
-            <form id="registrationForm" onsubmit="handleSubmit(event)">
+            <form id="regForm" onsubmit="handleSubmit(event)">
               <div class="form-row">
                 <div class="form-group">
-                  <label>孩子姓名 <span class="required">*</span></label>
+                  <label>孩子姓名<span class="req">*</span></label>
                   <input
                     type="text"
                     name="child_name"
@@ -1162,32 +1422,31 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label>出生年月日 <span class="required">*</span></label>
+                  <label>出生年月日<span class="req">*</span></label>
                   <input type="date" name="child_birthday" required />
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group">
-                  <label>性別 <span class="required">*</span></label>
+                  <label>性別<span class="req">*</span></label>
                   <select name="child_gender" required>
                     <option value="">請選擇</option>
-                    <option value="男生">男生</option>
-                    <option value="女生">女生</option>
+                    <option>男生</option>
+                    <option>女生</option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>欲報名班級 <span class="required">*</span></label>
-                  <select name="class_type" required>
+                  <label>欲參觀校區<span class="req">*</span></label>
+                  <select name="campus" required>
                     <option value="">請選擇</option>
-                    <option value="小班（3歲）">小班（3歲）</option>
-                    <option value="中班（4歲）">中班（4歲）</option>
-                    <option value="大班（5歲）">大班（5歲）</option>
+                    <option>咪咪蒙特梭利幼兒園（東區）</option>
+                    <option>家田蒙特梭利幼兒園（西區）</option>
                   </select>
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group">
-                  <label>家長姓名 <span class="required">*</span></label>
+                  <label>家長姓名<span class="req">*</span></label>
                   <input
                     type="text"
                     name="parent_name"
@@ -1196,7 +1455,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label>聯絡電話 <span class="required">*</span></label>
+                  <label>聯絡電話<span class="req">*</span></label>
                   <input
                     type="tel"
                     name="parent_phone"
@@ -1214,193 +1473,176 @@
                 />
               </div>
               <div class="form-group">
-                <label>備註 / 特殊需求</label>
+                <label>備註 / 希望參觀時段</label>
                 <textarea
                   name="notes"
-                  placeholder="如有任何問題或特殊需求，歡迎在此說明..."
+                  placeholder="請說明希望的參觀時間或任何問題..."
                 ></textarea>
               </div>
               <button type="submit" class="submit-btn" id="submitBtn">
-                <span id="submitText">送出報名資料 ✉️</span>
+                送出預約申請
               </button>
             </form>
           </div>
         </div>
-
-        <div class="success-screen" id="successScreen">
-          <span class="success-emoji">🎉</span>
-          <div class="success-title">報名資料已成功送出！</div>
-          <p class="success-text">
-            感謝您的報名，我們已收到您的資料。<br />
-            園方將在
-            <strong>24小時內</strong> 以電話或電子郵件與您聯繫。<br /><br />
-            如有任何急迫問題，歡迎直接致電<br />
-            <strong>📞 (02) 2700-XXXX</strong>
+        <div class="success-view" id="successView">
+          <span class="emoji">🎉</span>
+          <h3>預約申請已送出！</h3>
+          <p>
+            感謝您的預約，我們已收到您的資料。<br />園方將在
+            <strong>24小時內</strong> 以電話聯繫您確認參觀時間。
           </p>
           <button
-            class="btn-primary"
-            style="margin: 28px auto 0; display: flex"
+            class="btn-main"
+            style="margin: 24px auto 0; display: inline-flex"
             onclick="closeModal()"
           >
-            關閉視窗
+            關閉
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
     <script>
-      // ── EmailJS 初始化 ──
-      // ⚠️ 使用前請至 https://www.emailjs.com/ 註冊並填入以下設定：
-      const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY"; // EmailJS Public Key
-      const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID"; // EmailJS Service ID
-      const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // EmailJS Template ID
+      // EmailJS config — replace with real keys
+      const EJ_KEY = "YOUR_PUBLIC_KEY";
+      const EJ_SERVICE = "YOUR_SERVICE_ID";
+      const EJ_TEMPLATE = "YOUR_TEMPLATE_ID";
 
-      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      // Nav scroll effect
+      window.addEventListener("scroll", () => {
+        document
+          .getElementById("navbar")
+          .classList.toggle("scrolled", window.scrollY > 20);
+      });
 
-      // ── Local storage for registrations ──
-      const STORAGE_KEY = "kindergarten_registrations";
+      // Scroll reveal
+      const ro = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("revealed");
+              ro.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document
+        .querySelectorAll("[data-reveal]")
+        .forEach((el) => ro.observe(el));
 
-      function getRegistrations() {
-        try {
-          return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        } catch {
-          return [];
-        }
-      }
-
-      function saveRegistration(data) {
-        const list = getRegistrations();
-        list.push({ ...data, timestamp: new Date().toLocaleString("zh-TW") });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-        return list;
-      }
-
-      function buildHistoryText(list) {
-        if (list.length === 0) return "（尚無歷史報名資料）";
-        return list
-          .map(
-            (r, i) =>
-              `${i + 1}. [${r.timestamp}] ${r.child_name} / ${r.child_gender} / 生日:${r.child_birthday} / 班級:${r.class_type} / 家長:${r.parent_name} / 電話:${r.parent_phone} / Email:${r.parent_email || "未填"} / 備註:${r.notes || "無"}`,
-          )
-          .join("\n");
-      }
-
-      // ── Modal ──
+      // Modal
       function openModal() {
         document.getElementById("modalOverlay").classList.add("active");
         document.body.style.overflow = "hidden";
       }
-
       function closeModal() {
         document.getElementById("modalOverlay").classList.remove("active");
         document.body.style.overflow = "";
         setTimeout(() => {
           document.getElementById("formView").style.display = "";
-          document.getElementById("successScreen").style.display = "none";
-          document.getElementById("registrationForm").reset();
-          document.getElementById("submitBtn").disabled = false;
-          document.getElementById("submitText").textContent = "送出報名資料 ✉️";
-        }, 400);
+          document.getElementById("successView").style.display = "none";
+          document.getElementById("regForm").reset();
+          const btn = document.getElementById("submitBtn");
+          btn.disabled = false;
+          btn.textContent = "送出預約申請";
+        }, 350);
       }
-
       function handleOverlayClick(e) {
         if (e.target === document.getElementById("modalOverlay")) closeModal();
       }
 
-      // ── Toast ──
-      function showToast(msg, type = "") {
+      // Storage
+      const SK = "mimicasa_registrations";
+      function getRegs() {
+        try {
+          return JSON.parse(localStorage.getItem(SK)) || [];
+        } catch {
+          return [];
+        }
+      }
+      function saveReg(d) {
+        const l = getRegs();
+        l.push({ ...d, time: new Date().toLocaleString("zh-TW") });
+        localStorage.setItem(SK, JSON.stringify(l));
+        return l;
+      }
+      function buildHistory(list) {
+        if (!list.length) return "（尚無歷史報名資料）";
+        return list
+          .map(
+            (r, i) =>
+              `${i + 1}. [${r.time}] ${r.child_name} / ${r.child_gender} / 生日:${r.child_birthday} / 校區:${r.campus} / 家長:${r.parent_name} / 電話:${r.parent_phone} / Email:${r.parent_email || "未填"} / 備註:${r.notes || "無"}`,
+          )
+          .join("\n");
+      }
+
+      // Toast
+      function toast(msg, err) {
         const t = document.getElementById("toast");
         t.textContent = msg;
-        t.className = "toast" + (type ? " " + type : "");
+        t.className = "toast" + (err ? " error" : "");
         setTimeout(() => t.classList.add("show"), 10);
         setTimeout(() => t.classList.remove("show"), 4000);
       }
 
-      // ── Form Submit ──
+      // Submit
       async function handleSubmit(e) {
         e.preventDefault();
-        const form = e.target;
+        const f = e.target;
         const btn = document.getElementById("submitBtn");
-        const btnText = document.getElementById("submitText");
-
         btn.disabled = true;
-        btnText.textContent = "傳送中…";
+        btn.textContent = "傳送中…";
 
         const data = {
-          child_name: form.child_name.value.trim(),
-          child_birthday: form.child_birthday.value,
-          child_gender: form.child_gender.value,
-          class_type: form.class_type.value,
-          parent_name: form.parent_name.value.trim(),
-          parent_phone: form.parent_phone.value.trim(),
-          parent_email: form.parent_email.value.trim(),
-          notes: form.notes.value.trim(),
+          child_name: f.child_name.value.trim(),
+          child_birthday: f.child_birthday.value,
+          child_gender: f.child_gender.value,
+          campus: f.campus.value,
+          parent_name: f.parent_name.value.trim(),
+          parent_phone: f.parent_phone.value.trim(),
+          parent_email: f.parent_email.value.trim(),
+          notes: f.notes.value.trim(),
         };
 
-        // Save and get full history
-        const allRegistrations = saveRegistration(data);
-        const historyText = buildHistoryText(allRegistrations);
-
-        // EmailJS template parameters
-        const templateParams = {
-          to_email: "1354ark@gmail.com",
-          child_name: data.child_name,
-          child_birthday: data.child_birthday,
-          child_gender: data.child_gender,
-          class_type: data.class_type,
-          parent_name: data.parent_name,
-          parent_phone: data.parent_phone,
-          parent_email: data.parent_email || "未填",
-          notes: data.notes || "無",
-          submit_time: new Date().toLocaleString("zh-TW"),
-          history_list: historyText,
-          total_count: allRegistrations.length,
-        };
+        const allRegs = saveReg(data);
 
         try {
-          if (EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
-            // Demo mode — simulate success without real EmailJS
-            await new Promise((r) => setTimeout(r, 1200));
-            console.log("📧 [Demo] Email would be sent with:", templateParams);
-            showToast("✅ 報名成功！（示範模式）");
+          if (EJ_KEY === "YOUR_PUBLIC_KEY") {
+            await new Promise((r) => setTimeout(r, 1000));
+            console.log("📧 [Demo] Would send:", {
+              ...data,
+              history: buildHistory(allRegs),
+            });
           } else {
-            await emailjs.send(
-              EMAILJS_SERVICE_ID,
-              EMAILJS_TEMPLATE_ID,
-              templateParams,
-            );
-            showToast("✅ 報名資料已成功送出！");
+            await emailjs.send(EJ_SERVICE, EJ_TEMPLATE, {
+              to_email: "1354ark@gmail.com",
+              ...data,
+              parent_email: data.parent_email || "未填",
+              notes: data.notes || "無",
+              submit_time: new Date().toLocaleString("zh-TW"),
+              history_list: buildHistory(allRegs),
+              total_count: allRegs.length,
+            });
           }
-
           document.getElementById("formView").style.display = "none";
-          document.getElementById("successScreen").style.display = "block";
+          document.getElementById("successView").style.display = "block";
         } catch (err) {
           console.error(err);
-          showToast("❌ 送出失敗，請稍後再試或致電聯絡我們", "error");
+          toast("❌ 送出失敗，請稍後再試", true);
           btn.disabled = false;
-          btnText.textContent = "送出報名資料 ✉️";
+          btn.textContent = "送出預約申請";
         }
       }
-
-      // ── Scroll reveal ──
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add("revealed");
-              observer.unobserve(e.target);
-            }
-          });
-        },
-        { threshold: 0.15 },
-      );
-
-      document
-        .querySelectorAll("[data-reveal]")
-        .forEach((el) => observer.observe(el));
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+      if (typeof emailjs !== "undefined" && EJ_KEY !== "YOUR_PUBLIC_KEY") {
+        emailjs.init({ publicKey: EJ_KEY });
+      }
     </script>
   </body>
 </html>

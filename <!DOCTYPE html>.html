@@ -1,0 +1,1407 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小太陽幼兒園 — 讓每個孩子都閃耀</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+      :root {
+        --sun: #f5a623;
+        --sun-light: #fff0cc;
+        --sky: #4a90d9;
+        --sky-light: #e8f4fd;
+        --grass: #7cb342;
+        --warm: #ff6b6b;
+        --cream: #fffdf5;
+        --dark: #2c2c2c;
+        --mid: #666;
+        --light-border: #f0e8d0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Noto Sans TC", sans-serif;
+        background: var(--cream);
+        color: var(--dark);
+        overflow-x: hidden;
+      }
+
+      /* ── FLOATING SHAPES ── */
+      .shapes {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .shape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.06;
+      }
+      .shape-1 {
+        width: 500px;
+        height: 500px;
+        background: var(--sun);
+        top: -100px;
+        right: -150px;
+        animation: drift1 20s ease-in-out infinite;
+      }
+      .shape-2 {
+        width: 300px;
+        height: 300px;
+        background: var(--sky);
+        bottom: 200px;
+        left: -80px;
+        animation: drift2 25s ease-in-out infinite;
+      }
+      .shape-3 {
+        width: 200px;
+        height: 200px;
+        background: var(--grass);
+        top: 50%;
+        right: 10%;
+        animation: drift1 18s ease-in-out infinite reverse;
+      }
+
+      @keyframes drift1 {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        33% {
+          transform: translate(30px, -20px) scale(1.05);
+        }
+        66% {
+          transform: translate(-20px, 30px) scale(0.95);
+        }
+      }
+      @keyframes drift2 {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(40px, -30px);
+        }
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 0 5%;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(255, 253, 245, 0.85);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--light-border);
+      }
+
+      .nav-logo {
+        font-family: "Noto Serif TC", serif;
+        font-size: 1.3rem;
+        font-weight: 900;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .nav-logo .sun-icon {
+        width: 36px;
+        height: 36px;
+        background: var(--sun);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        animation: spin-slow 10s linear infinite;
+      }
+      @keyframes spin-slow {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .nav-cta {
+        background: var(--sun);
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 50px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 16px rgba(245, 166, 35, 0.35);
+      }
+      .nav-cta:hover {
+        background: #e8941a;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(245, 166, 35, 0.45);
+      }
+
+      /* ── HERO ── */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 100px 5% 80px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--sun-light);
+        color: #b07a00;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-bottom: 24px;
+        border: 1px solid rgba(245, 166, 35, 0.25);
+      }
+
+      .hero h1 {
+        font-family: "Noto Serif TC", serif;
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        font-weight: 900;
+        line-height: 1.2;
+        margin-bottom: 24px;
+        color: var(--dark);
+      }
+
+      .hero h1 .highlight {
+        color: var(--sun);
+        position: relative;
+        display: inline-block;
+      }
+      .hero h1 .highlight::after {
+        content: "";
+        position: absolute;
+        bottom: 4px;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: var(--sun-light);
+        border-radius: 3px;
+        z-index: -1;
+      }
+
+      .hero-desc {
+        font-size: 1.05rem;
+        line-height: 1.85;
+        color: var(--mid);
+        margin-bottom: 40px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        background: var(--sun);
+        color: white;
+        border: none;
+        padding: 16px 36px;
+        border-radius: 50px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 6px 24px rgba(245, 166, 35, 0.4);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-primary:hover {
+        background: #e8941a;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 32px rgba(245, 166, 35, 0.5);
+      }
+
+      .btn-secondary {
+        color: var(--dark);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: gap 0.2s;
+      }
+      .btn-secondary:hover {
+        gap: 10px;
+      }
+
+      /* ── HERO ILLUSTRATION ── */
+      .hero-visual {
+        position: relative;
+      }
+
+      .hero-card {
+        background: white;
+        border-radius: 32px;
+        padding: 40px;
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.08),
+          0 0 0 1px var(--light-border);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(
+          90deg,
+          var(--sun),
+          var(--warm),
+          var(--sky),
+          var(--grass)
+        );
+      }
+
+      .big-emoji {
+        font-size: 5rem;
+        text-align: center;
+        display: block;
+        margin-bottom: 24px;
+        animation: bounce 2s ease-in-out infinite;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .stat-item {
+        background: var(--cream);
+        border-radius: 16px;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid var(--light-border);
+      }
+      .stat-number {
+        font-family: "Noto Serif TC", serif;
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--sun);
+        display: block;
+      }
+      .stat-label {
+        font-size: 0.78rem;
+        color: var(--mid);
+        margin-top: 4px;
+      }
+
+      /* ── FEATURES ── */
+      .features {
+        padding: 100px 5%;
+        position: relative;
+        z-index: 1;
+      }
+
+      .section-header {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto 64px;
+      }
+
+      .section-tag {
+        display: inline-block;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--sky);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: 16px;
+      }
+
+      .section-title {
+        font-family: "Noto Serif TC", serif;
+        font-size: clamp(1.8rem, 3vw, 2.8rem);
+        font-weight: 700;
+        line-height: 1.3;
+        margin-bottom: 16px;
+      }
+
+      .section-sub {
+        color: var(--mid);
+        line-height: 1.8;
+        font-size: 0.95rem;
+      }
+
+      .features-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .feature-card {
+        background: white;
+        border-radius: 24px;
+        padding: 36px;
+        border: 1px solid var(--light-border);
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .feature-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+        border-color: transparent;
+      }
+
+      .feature-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+      .icon-sun {
+        background: var(--sun-light);
+      }
+      .icon-sky {
+        background: var(--sky-light);
+      }
+      .icon-green {
+        background: #e8f5e9;
+      }
+      .icon-pink {
+        background: #fce4ec;
+      }
+      .icon-purple {
+        background: #f3e5f5;
+      }
+      .icon-orange {
+        background: #fff3e0;
+      }
+
+      .feature-title {
+        font-family: "Noto Serif TC", serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .feature-desc {
+        font-size: 0.88rem;
+        line-height: 1.8;
+        color: var(--mid);
+      }
+
+      /* ── TESTIMONIALS ── */
+      .testimonials {
+        background: var(--dark);
+        padding: 100px 5%;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .testimonials::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at 30% 50%,
+          rgba(245, 166, 35, 0.08) 0%,
+          transparent 70%
+        );
+      }
+
+      .testimonials .section-title {
+        color: white;
+      }
+      .testimonials .section-tag {
+        color: var(--sun);
+      }
+      .testimonials .section-sub {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .testimonials-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .testimonial-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        padding: 32px;
+        transition: all 0.3s;
+      }
+      .testimonial-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-4px);
+      }
+
+      .stars {
+        font-size: 1rem;
+        margin-bottom: 16px;
+      }
+
+      .testimonial-text {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+        line-height: 1.85;
+        margin-bottom: 24px;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .author-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .author-name {
+        color: white;
+        font-size: 0.88rem;
+        font-weight: 500;
+      }
+      .author-role {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.78rem;
+      }
+
+      /* ── CTA SECTION ── */
+      .cta-section {
+        padding: 120px 5%;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .cta-box {
+        max-width: 700px;
+        margin: 0 auto;
+        background: linear-gradient(135deg, var(--sun) 0%, #ff8c42 100%);
+        border-radius: 40px;
+        padding: 80px 60px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(245, 166, 35, 0.35);
+      }
+      .cta-box::before {
+        content: "";
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .cta-box::after {
+        content: "";
+        position: absolute;
+        bottom: -60px;
+        left: -60px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .cta-emoji {
+        font-size: 3.5rem;
+        display: block;
+        margin-bottom: 24px;
+      }
+
+      .cta-box h2 {
+        font-family: "Noto Serif TC", serif;
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: white;
+        margin-bottom: 16px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .cta-box p {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 40px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .btn-white {
+        background: white;
+        color: var(--sun);
+        border: none;
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-white:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        background: #1a1a1a;
+        padding: 60px 5% 40px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .footer-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 32px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        margin-bottom: 40px;
+      }
+
+      .footer-logo {
+        font-family: "Noto Serif TC", serif;
+        font-size: 1.2rem;
+        font-weight: 900;
+        color: white;
+      }
+
+      .footer-info {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.85rem;
+        line-height: 1.8;
+      }
+
+      .footer-bottom {
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.25);
+        font-size: 0.8rem;
+      }
+
+      /* ── MODAL ── */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .modal-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .modal {
+        background: white;
+        border-radius: 32px;
+        width: 100%;
+        max-width: 560px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+        transform: translateY(30px) scale(0.96);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+      }
+      .modal-overlay.active .modal {
+        transform: translateY(0) scale(1);
+      }
+
+      .modal-header {
+        padding: 36px 36px 24px;
+        position: relative;
+      }
+      .modal-header::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--sun), var(--warm), var(--sky));
+        border-radius: 32px 32px 0 0;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        width: 36px;
+        height: 36px;
+        border: none;
+        background: #f5f5f5;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        color: var(--mid);
+      }
+      .modal-close:hover {
+        background: #eee;
+        transform: rotate(90deg);
+      }
+
+      .modal-title {
+        font-family: "Noto Serif TC", serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .modal-sub {
+        color: var(--mid);
+        font-size: 0.85rem;
+      }
+
+      .modal-body {
+        padding: 0 36px 36px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: var(--dark);
+      }
+      label .required {
+        color: var(--warm);
+        margin-left: 3px;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1.5px solid #e8e8e8;
+        border-radius: 12px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 0.9rem;
+        color: var(--dark);
+        background: #fafafa;
+        transition: all 0.2s;
+        outline: none;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--sun);
+        background: white;
+        box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.1);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 90px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 16px;
+        background: var(--sun);
+        color: white;
+        border: none;
+        border-radius: 14px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 8px;
+        box-shadow: 0 6px 20px rgba(245, 166, 35, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .submit-btn:hover:not(:disabled) {
+        background: #e8941a;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(245, 166, 35, 0.45);
+      }
+      .submit-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      /* ── SUCCESS SCREEN ── */
+      .success-screen {
+        display: none;
+        text-align: center;
+        padding: 60px 36px;
+      }
+      .success-emoji {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        display: block;
+      }
+      .success-title {
+        font-family: "Noto Serif TC", serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .success-text {
+        color: var(--mid);
+        line-height: 1.8;
+        font-size: 0.9rem;
+      }
+
+      /* ── TOAST ── */
+      .toast {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: var(--dark);
+        color: white;
+        padding: 14px 22px;
+        border-radius: 14px;
+        font-size: 0.88rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        z-index: 9999;
+        max-width: 300px;
+      }
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .toast.error {
+        background: #c62828;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 900px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+        .features-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .testimonials-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-visual {
+          display: none;
+        }
+      }
+      @media (max-width: 640px) {
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .cta-box {
+          padding: 50px 30px;
+        }
+        .cta-box h2 {
+          font-size: 1.6rem;
+        }
+        .modal-header,
+        .modal-body {
+          padding-left: 24px;
+          padding-right: 24px;
+        }
+      }
+
+      /* Entrance animations */
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      [data-reveal].revealed {
+        opacity: 1;
+        transform: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background shapes -->
+    <div class="shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-logo">
+        <div class="sun-icon">☀️</div>
+        咪咪家田幼兒園
+      </div>
+      <button class="nav-cta" onclick="openModal()">預約報名</button>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-content" data-reveal>
+          <div class="hero-eyebrow">🌟 2025年秋季招生中</div>
+          <h1>
+            讓孩子在<span class="highlight">愛</span>與<span class="highlight"
+              >快樂</span
+            >中茁壯成長
+          </h1>
+          <p class="hero-desc">
+            小太陽幼兒園以全人教育為核心，透過豐富的探索課程、溫暖的師生互動，
+            陪伴每一位孩子發現自己獨特的閃光點，奠定美好人生的第一步。
+          </p>
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="openModal()">
+              ✏️ 預約報名
+            </button>
+            <a href="#features" class="btn-secondary">了解更多 →</a>
+          </div>
+        </div>
+        <div class="hero-visual" data-reveal>
+          <div class="hero-card">
+            <span class="big-emoji">🧒</span>
+            <div class="stat-grid">
+              <div class="stat-item">
+                <span class="stat-number">18年</span>
+                <span class="stat-label">辦學經驗</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">98%</span>
+                <span class="stat-label">家長滿意度</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">1:8</span>
+                <span class="stat-label">師生比例</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">300+</span>
+                <span class="stat-label">畢業校友</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+      <div class="section-header" data-reveal>
+        <div class="section-tag">我們的特色</div>
+        <h2 class="section-title">用心設計，為孩子打造最好的起點</h2>
+        <p class="section-sub">
+          每一個課程設計、每一個空間規劃，都是為了孩子的全方位發展而生。
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon icon-sun">🎨</div>
+          <h3 class="feature-title">藝術創意課程</h3>
+          <p class="feature-desc">
+            透過繪畫、音樂、手作等多元藝術活動，啟發孩子天生的創造力與美感，讓想像力自由飛翔。
+          </p>
+        </div>
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon icon-sky">📚</div>
+          <h3 class="feature-title">雙語學習環境</h3>
+          <p class="feature-desc">
+            中英並重的日常環境，外籍老師每日互動課程，讓孩子自然而然地愛上語言學習。
+          </p>
+        </div>
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon icon-green">🌿</div>
+          <h3 class="feature-title">自然探索教育</h3>
+          <p class="feature-desc">
+            設有室內植物角、戶外生態園，定期自然觀察活動，培養孩子對生命的尊重與好奇心。
+          </p>
+        </div>
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon icon-pink">🍱</div>
+          <h3 class="feature-title">營養午餐供應</h3>
+          <p class="feature-desc">
+            每日由專業廚師烹調均衡餐點，食材新鮮安全，讓孩子吃得健康、長得好。
+          </p>
+        </div>
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon icon-purple">🏃</div>
+          <h3 class="feature-title">體能律動課程</h3>
+          <p class="feature-desc">
+            寬敞的戶外活動場、室內體能室，專業體能老師帶領孩子發展大小肌肉協調能力。
+          </p>
+        </div>
+        <div class="feature-card" data-reveal>
+          <div class="feature-icon icon-orange">👨‍👩‍👧</div>
+          <h3 class="feature-title">親師緊密溝通</h3>
+          <p class="feature-desc">
+            每週聯絡簿、每月親師座談、隨時可溝通的班級群組，讓您時刻掌握孩子成長動態。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+      <div class="section-header" data-reveal>
+        <div class="section-tag">家長心聲</div>
+        <h2 class="section-title">每一份信任，都是我們最大的動力</h2>
+        <p class="section-sub">聽聽已在小太陽的家庭怎麼說。</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card" data-reveal>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">
+            「孩子從小班到大班整整三年，每天早上都是開心出門！老師的用心和耐心讓我非常感動，強烈推薦給所有家長。」
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👩</div>
+            <div>
+              <div class="author-name">陳媽媽</div>
+              <div class="author-role">大班學生家長</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card" data-reveal>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">
+            「雙語環境真的很有效果，我兒子不到一年就開始主動用英文說話。課程設計很用心，不是填鴨式的學習。」
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👨</div>
+            <div>
+              <div class="author-name">林爸爸</div>
+              <div class="author-role">中班學生家長</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card" data-reveal>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">
+            「軟硬體設施都很棒，最讓我放心的是老師和行政人員都非常親切，有任何問題都能馬上得到回應。」
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👩</div>
+            <div>
+              <div class="author-name">王媽媽</div>
+              <div class="author-role">小班學生家長</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="cta-box" data-reveal>
+        <span class="cta-emoji">🌟</span>
+        <h2>名額有限，立即預約報名</h2>
+        <p>
+          2025年秋季班招生中，每班名額僅15位。<br />填寫報名表，我們將在24小時內與您聯繫。
+        </p>
+        <button class="btn-white" onclick="openModal()">✏️ 立即預約報名</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <div class="footer-logo">☀️ 小太陽幼兒園</div>
+          <div class="footer-info" style="margin-top: 10px">
+            讓每個孩子都閃耀
+          </div>
+        </div>
+        <div class="footer-info">
+          📍 台北市大安區復興南路一段123號<br />
+          📞 (02) 2700-XXXX<br />
+          🕐 週一至週五 7:30–18:30
+        </div>
+        <button
+          class="btn-primary"
+          onclick="openModal()"
+          style="font-size: 0.9rem; padding: 12px 28px"
+        >
+          預約報名 →
+        </button>
+      </div>
+      <div class="footer-bottom">© 2025 小太陽幼兒園 版權所有</div>
+    </footer>
+
+    <!-- Registration Modal -->
+    <div
+      class="modal-overlay"
+      id="modalOverlay"
+      onclick="handleOverlayClick(event)"
+    >
+      <div class="modal" id="modal">
+        <div id="formView">
+          <div class="modal-header">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-title">📋 預約報名</div>
+            <div class="modal-sub">請填寫以下資料，我們將盡快與您聯繫</div>
+          </div>
+          <div class="modal-body">
+            <form id="registrationForm" onsubmit="handleSubmit(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>孩子姓名 <span class="required">*</span></label>
+                  <input
+                    type="text"
+                    name="child_name"
+                    placeholder="請輸入孩子姓名"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label>出生年月日 <span class="required">*</span></label>
+                  <input type="date" name="child_birthday" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>性別 <span class="required">*</span></label>
+                  <select name="child_gender" required>
+                    <option value="">請選擇</option>
+                    <option value="男生">男生</option>
+                    <option value="女生">女生</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>欲報名班級 <span class="required">*</span></label>
+                  <select name="class_type" required>
+                    <option value="">請選擇</option>
+                    <option value="小班（3歲）">小班（3歲）</option>
+                    <option value="中班（4歲）">中班（4歲）</option>
+                    <option value="大班（5歲）">大班（5歲）</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>家長姓名 <span class="required">*</span></label>
+                  <input
+                    type="text"
+                    name="parent_name"
+                    placeholder="請輸入家長姓名"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label>聯絡電話 <span class="required">*</span></label>
+                  <input
+                    type="tel"
+                    name="parent_phone"
+                    placeholder="09XX-XXXXXX"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>電子郵件</label>
+                <input
+                  type="email"
+                  name="parent_email"
+                  placeholder="your@email.com"
+                />
+              </div>
+              <div class="form-group">
+                <label>備註 / 特殊需求</label>
+                <textarea
+                  name="notes"
+                  placeholder="如有任何問題或特殊需求，歡迎在此說明..."
+                ></textarea>
+              </div>
+              <button type="submit" class="submit-btn" id="submitBtn">
+                <span id="submitText">送出報名資料 ✉️</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="success-screen" id="successScreen">
+          <span class="success-emoji">🎉</span>
+          <div class="success-title">報名資料已成功送出！</div>
+          <p class="success-text">
+            感謝您的報名，我們已收到您的資料。<br />
+            園方將在
+            <strong>24小時內</strong> 以電話或電子郵件與您聯繫。<br /><br />
+            如有任何急迫問題，歡迎直接致電<br />
+            <strong>📞 (02) 2700-XXXX</strong>
+          </p>
+          <button
+            class="btn-primary"
+            style="margin: 28px auto 0; display: flex"
+            onclick="closeModal()"
+          >
+            關閉視窗
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+      // ── EmailJS 初始化 ──
+      // ⚠️ 使用前請至 https://www.emailjs.com/ 註冊並填入以下設定：
+      const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY"; // EmailJS Public Key
+      const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID"; // EmailJS Service ID
+      const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // EmailJS Template ID
+
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+      // ── Local storage for registrations ──
+      const STORAGE_KEY = "kindergarten_registrations";
+
+      function getRegistrations() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveRegistration(data) {
+        const list = getRegistrations();
+        list.push({ ...data, timestamp: new Date().toLocaleString("zh-TW") });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        return list;
+      }
+
+      function buildHistoryText(list) {
+        if (list.length === 0) return "（尚無歷史報名資料）";
+        return list
+          .map(
+            (r, i) =>
+              `${i + 1}. [${r.timestamp}] ${r.child_name} / ${r.child_gender} / 生日:${r.child_birthday} / 班級:${r.class_type} / 家長:${r.parent_name} / 電話:${r.parent_phone} / Email:${r.parent_email || "未填"} / 備註:${r.notes || "無"}`,
+          )
+          .join("\n");
+      }
+
+      // ── Modal ──
+      function openModal() {
+        document.getElementById("modalOverlay").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        document.getElementById("modalOverlay").classList.remove("active");
+        document.body.style.overflow = "";
+        setTimeout(() => {
+          document.getElementById("formView").style.display = "";
+          document.getElementById("successScreen").style.display = "none";
+          document.getElementById("registrationForm").reset();
+          document.getElementById("submitBtn").disabled = false;
+          document.getElementById("submitText").textContent = "送出報名資料 ✉️";
+        }, 400);
+      }
+
+      function handleOverlayClick(e) {
+        if (e.target === document.getElementById("modalOverlay")) closeModal();
+      }
+
+      // ── Toast ──
+      function showToast(msg, type = "") {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.className = "toast" + (type ? " " + type : "");
+        setTimeout(() => t.classList.add("show"), 10);
+        setTimeout(() => t.classList.remove("show"), 4000);
+      }
+
+      // ── Form Submit ──
+      async function handleSubmit(e) {
+        e.preventDefault();
+        const form = e.target;
+        const btn = document.getElementById("submitBtn");
+        const btnText = document.getElementById("submitText");
+
+        btn.disabled = true;
+        btnText.textContent = "傳送中…";
+
+        const data = {
+          child_name: form.child_name.value.trim(),
+          child_birthday: form.child_birthday.value,
+          child_gender: form.child_gender.value,
+          class_type: form.class_type.value,
+          parent_name: form.parent_name.value.trim(),
+          parent_phone: form.parent_phone.value.trim(),
+          parent_email: form.parent_email.value.trim(),
+          notes: form.notes.value.trim(),
+        };
+
+        // Save and get full history
+        const allRegistrations = saveRegistration(data);
+        const historyText = buildHistoryText(allRegistrations);
+
+        // EmailJS template parameters
+        const templateParams = {
+          to_email: "1354ark@gmail.com",
+          child_name: data.child_name,
+          child_birthday: data.child_birthday,
+          child_gender: data.child_gender,
+          class_type: data.class_type,
+          parent_name: data.parent_name,
+          parent_phone: data.parent_phone,
+          parent_email: data.parent_email || "未填",
+          notes: data.notes || "無",
+          submit_time: new Date().toLocaleString("zh-TW"),
+          history_list: historyText,
+          total_count: allRegistrations.length,
+        };
+
+        try {
+          if (EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+            // Demo mode — simulate success without real EmailJS
+            await new Promise((r) => setTimeout(r, 1200));
+            console.log("📧 [Demo] Email would be sent with:", templateParams);
+            showToast("✅ 報名成功！（示範模式）");
+          } else {
+            await emailjs.send(
+              EMAILJS_SERVICE_ID,
+              EMAILJS_TEMPLATE_ID,
+              templateParams,
+            );
+            showToast("✅ 報名資料已成功送出！");
+          }
+
+          document.getElementById("formView").style.display = "none";
+          document.getElementById("successScreen").style.display = "block";
+        } catch (err) {
+          console.error(err);
+          showToast("❌ 送出失敗，請稍後再試或致電聯絡我們", "error");
+          btn.disabled = false;
+          btnText.textContent = "送出報名資料 ✉️";
+        }
+      }
+
+      // ── Scroll reveal ──
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("revealed");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      document
+        .querySelectorAll("[data-reveal]")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

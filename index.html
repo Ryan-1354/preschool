@@ -10,7 +10,9 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
+      /* ── RESET ── */
       *,
       *::before,
       *::after {
@@ -22,6 +24,7 @@
         scroll-behavior: smooth;
       }
 
+      /* ── TOKENS ── */
       :root {
         --green: #59702f;
         --green-light: rgba(97, 162, 60, 0.1);
@@ -29,11 +32,11 @@
         --text: #101828;
         --text-mid: #4a5565;
         --text-muted: #99a1af;
-        --cream: #e6c9a8;
         --bg-light: #fafaf9;
         --border: #f3f4f6;
         --dark-bg: #2d2d2d;
         --dark-border: #364153;
+        --cream: #e6c9a8;
       }
       body {
         font-family: "Noto Sans TC", sans-serif;
@@ -41,35 +44,44 @@
         overflow-x: hidden;
       }
 
-      /* ── FIXED NAVBAR ── */
+      /* ════════════════════════════════
+   NAVBAR
+════════════════════════════════ */
       nav {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         z-index: 500;
-        padding: 16px 120px;
+        padding: 0 120px;
+        height: 100px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         transition:
           background 0.3s,
-          box-shadow 0.3s;
+          box-shadow 0.3s,
+          height 0.3s;
       }
       nav.transparent {
         background: transparent;
       }
       nav.solid {
-        background: rgba(255, 255, 255, 0.96);
+        background: rgba(255, 255, 255, 0.97);
         backdrop-filter: blur(12px);
         box-shadow:
           0 1px 0 var(--border),
           0 4px 20px rgba(0, 0, 0, 0.06);
+        height: 68px;
       }
+
+      /* Brand (left) */
       .nav-brand {
         display: flex;
         flex-direction: column;
-        gap: 1px;
+        gap: 6px;
+        width: 400px;
+        flex-shrink: 0;
       }
       nav.transparent .nav-brand-main {
         font-size: 20px;
@@ -77,11 +89,12 @@
         color: white;
         letter-spacing: -0.71px;
         white-space: nowrap;
+        line-height: 24px;
       }
       nav.transparent .nav-brand-sub {
         font-size: 13px;
         font-weight: 300;
-        color: white;
+        color: rgba(255, 255, 255, 0.85);
         white-space: nowrap;
       }
       nav.solid .nav-brand-main {
@@ -96,14 +109,28 @@
         color: var(--text-muted);
         white-space: nowrap;
       }
+
+      /* Center logo */
       .nav-logo {
-        width: 100px;
-        height: 70px;
+        width: 142px;
+        height: 100px;
         object-fit: contain;
         flex-shrink: 0;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: opacity 0.3s;
       }
       nav.solid .nav-logo {
-        display: none;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Right: links + cta */
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 24px;
       }
       .nav-links {
         display: flex;
@@ -119,7 +146,7 @@
         transition: opacity 0.2s;
       }
       nav.transparent .nav-links a:hover {
-        opacity: 0.75;
+        opacity: 0.7;
       }
       nav.solid .nav-links a {
         font-size: 14px;
@@ -147,7 +174,96 @@
         background: #4a5e26;
       }
 
-      /* ── HERO ── */
+      /* Hamburger button */
+      .nav-hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 40px;
+        height: 40px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        flex-shrink: 0;
+      }
+      .nav-hamburger span {
+        display: block;
+        height: 2px;
+        border-radius: 2px;
+        transition: all 0.3s;
+      }
+      nav.transparent .nav-hamburger span {
+        background: white;
+      }
+      nav.solid .nav-hamburger span {
+        background: var(--text);
+      }
+      .nav-hamburger.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .nav-hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-hamburger.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      /* Mobile drawer */
+      .nav-drawer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 490;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(16px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        transform: translateY(-100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+      }
+      .nav-drawer.open {
+        transform: translateY(0);
+        pointer-events: all;
+      }
+      .nav-drawer a {
+        font-size: 24px;
+        font-weight: 500;
+        color: var(--text);
+        text-decoration: none;
+        letter-spacing: -0.3px;
+        transition: color 0.2s;
+      }
+      .nav-drawer a:hover {
+        color: var(--green);
+      }
+      .nav-drawer .drawer-cta {
+        background: var(--green);
+        color: white;
+        border: none;
+        padding: 16px 40px;
+        border-radius: 12px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: background 0.2s;
+      }
+      .nav-drawer .drawer-cta:hover {
+        background: #4a5e26;
+      }
+
+      /* ════════════════════════════════
+   HERO
+════════════════════════════════ */
       .hero {
         position: relative;
         height: 800px;
@@ -215,6 +331,7 @@
         gap: 5px;
         white-space: nowrap;
         transition: background 0.2s;
+        z-index: 1;
       }
       .hero-btn:hover {
         background: #4a5e26;
@@ -224,7 +341,9 @@
         height: 20px;
       }
 
-      /* ── SECTION ── */
+      /* ════════════════════════════════
+   SECTIONS
+════════════════════════════════ */
       .section {
         padding: 80px 120px;
       }
@@ -418,9 +537,13 @@
         overflow: hidden;
         display: grid;
         grid-template-columns: 1fr 1fr;
+        min-height: 600px;
       }
       .campus-content {
-        padding: 251px 64px 64px;
+        padding: 80px 64px 64px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
       .campus-tag {
         display: inline-block;
@@ -488,6 +611,7 @@
         font-size: 16px;
         cursor: pointer;
         transition: background 0.2s;
+        align-self: flex-start;
       }
       .campus-btn:hover {
         background: #4e8830;
@@ -531,12 +655,8 @@
       }
       .foot-sub {
         font-size: 12px;
-        color: white;
+        color: rgba(255, 255, 255, 0.6);
         white-space: nowrap;
-      }
-      .foot-tag {
-        font-size: 14px;
-        color: white;
       }
       .foot-tagline {
         font-size: 14px;
@@ -624,13 +744,11 @@
         font-size: 14px;
         color: var(--text-muted);
         line-height: 20px;
-        letter-spacing: -0.15px;
       }
       .foot-h-time {
         font-size: 14px;
         color: white;
         line-height: 20px;
-        letter-spacing: -0.15px;
       }
       .foot-h-closed {
         font-size: 12px;
@@ -642,12 +760,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
       }
       .foot-copy {
         font-size: 14px;
         color: var(--text-muted);
         line-height: 20px;
-        letter-spacing: -0.15px;
       }
       .foot-links {
         display: flex;
@@ -663,7 +782,222 @@
         color: white;
       }
 
-      /* ── REVEAL ── */
+      /* ════════════════════════════════
+   MODAL (Registration Form)
+════════════════════════════════ */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .modal {
+        background: white;
+        border-radius: 24px;
+        width: 100%;
+        max-width: 540px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.2);
+        transform: translateY(24px) scale(0.97);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .modal-overlay.open .modal {
+        transform: none;
+      }
+      .modal-bar {
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          #2d5a3d,
+          var(--green),
+          var(--green-bright)
+        );
+        border-radius: 24px 24px 0 0;
+      }
+      .modal-head {
+        padding: 28px 32px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .modal-head-text h2 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .modal-head-text p {
+        font-size: 0.82rem;
+        color: var(--text-mid);
+      }
+      .modal-close {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: none;
+        background: #f0f0f0;
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--text-mid);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+      .modal-close:hover {
+        background: #e0e0e0;
+        transform: rotate(90deg);
+      }
+      .modal-body {
+        padding: 0 32px 32px;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .form-group {
+        margin-bottom: 16px;
+      }
+      label {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      label .req {
+        color: #e53935;
+        margin-left: 3px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1.5px solid #e0e0e0;
+        border-radius: 10px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 0.88rem;
+        color: var(--text);
+        background: #fafafa;
+        outline: none;
+        transition: all 0.2s;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--green);
+        background: white;
+        box-shadow: 0 0 0 3px rgba(89, 112, 47, 0.1);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+      .submit-btn {
+        width: 100%;
+        padding: 14px;
+        background: var(--green);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: all 0.25s;
+        box-shadow: 0 4px 16px rgba(89, 112, 47, 0.3);
+      }
+      .submit-btn:hover:not(:disabled) {
+        background: #4a5e26;
+        transform: translateY(-1px);
+      }
+      .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* Success view */
+      .success-view {
+        display: none;
+        text-align: center;
+        padding: 52px 32px;
+      }
+      .success-view .emoji {
+        font-size: 3.5rem;
+        margin-bottom: 16px;
+        display: block;
+      }
+      .success-view h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .success-view p {
+        font-size: 0.85rem;
+        color: var(--text-mid);
+        line-height: 1.8;
+      }
+      .success-close {
+        margin: 24px auto 0;
+        display: inline-flex;
+        align-items: center;
+        background: var(--green);
+        color: white;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 10px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .success-close:hover {
+        background: #4a5e26;
+      }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 9999;
+        background: #1a2820;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        transform: translateY(80px);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .toast.error {
+        background: #b71c1c;
+      }
+
+      /* ════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════ */
       [data-reveal] {
         opacity: 0;
         transform: translateY(20px);
@@ -685,16 +1019,23 @@
         transition-delay: 0.3s;
       }
 
-      /* ── RESPONSIVE ── */
-      @media (max-width: 1100px) {
-        nav,
-        .section,
-        footer {
-          padding-left: 40px;
-          padding-right: 40px;
+      /* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+
+      /* Tablet (≤1024px) */
+      @media (max-width: 1024px) {
+        nav {
+          padding: 0 40px;
         }
-        .hero-text {
-          left: 40px;
+        .nav-brand {
+          width: auto;
+        }
+        .section {
+          padding: 80px 40px;
+        }
+        footer {
+          padding: 64px 40px 0;
         }
         .phil-top {
           grid-template-columns: 1fr;
@@ -720,27 +1061,89 @@
           padding: 48px 40px;
         }
         .campus-img {
-          height: 400px;
+          height: 360px;
         }
         .foot-grid {
           grid-template-columns: 1fr 1fr;
         }
+        .hero-text {
+          left: 40px;
+        }
       }
+
+      /* Tablet/Mobile (≤768px) — hamburger kicks in */
       @media (max-width: 768px) {
         nav {
-          padding: 14px 20px;
+          padding: 0 20px;
+          height: 64px;
+        }
+        nav.solid {
+          height: 64px;
+        }
+        .nav-brand {
+          width: auto;
+        }
+        nav.transparent .nav-brand-main,
+        nav.solid .nav-brand-main {
+          font-size: 14px;
+          font-weight: 700;
+          color: white;
+        }
+        nav.solid .nav-brand-main {
+          color: var(--text);
+        }
+        nav.transparent .nav-brand-sub,
+        nav.solid .nav-brand-sub {
+          display: none;
         }
         .nav-logo {
+          display: none !important;
+        }
+
+        /* Hide desktop nav-right, show hamburger */
+        .nav-right {
           display: none;
         }
-        .nav-links {
-          display: none;
+        .nav-hamburger {
+          display: flex;
+        }
+
+        .hero {
+          height: 600px;
+        }
+        .hero-text {
+          left: 20px;
+          right: 20px;
         }
         .hero-line1,
         .hero-line2 {
-          font-size: 36px;
-          line-height: 48px;
+          font-size: 32px;
+          line-height: 44px;
+          white-space: normal;
+          text-align: left;
         }
+        .hero-line2 {
+          text-align: left;
+        }
+        .hero-btn {
+          padding: 16px 24px;
+          font-size: 14px;
+          bottom: auto;
+          top: auto;
+          position: relative;
+          transform: none;
+          left: auto;
+          margin: 20px auto 0;
+          display: flex;
+        }
+        /* Re-position hero btn for mobile */
+        .hero-actions {
+          position: absolute;
+          bottom: 40px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
         .section {
           padding: 60px 20px;
         }
@@ -759,34 +1162,88 @@
         }
         .foot-bottom {
           flex-direction: column;
-          gap: 12px;
           text-align: center;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .modal-head,
+        .modal-body {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero-line1,
+        .hero-line2 {
+          font-size: 26px;
+          line-height: 36px;
+        }
+        .sec-h2 {
+          font-size: 26px;
         }
       }
     </style>
   </head>
   <body>
-    <!-- NAVBAR -->
+    <!-- ════════════════════════════════
+     NAVBAR
+════════════════════════════════ -->
     <nav id="nav" class="transparent">
       <div class="nav-brand">
         <div class="nav-brand-main">咪咪 & 家田蒙特梭利幼兒園</div>
         <div class="nav-brand-sub">MImi & Casa Montessori Preschool</div>
       </div>
+
       <img
         class="nav-logo"
-        src="https://www.figma.com/api/mcp/asset/fdf383bd-fe06-45e9-9fa2-9e53e5251845"
+        src="https://www.figma.com/api/mcp/asset/509f0747-81c2-4886-80b7-730b5d2eed70"
         alt="logo"
       />
-      <ul class="nav-links">
-        <li><a href="#philosophy">關於我們</a></li>
-        <li><a href="#philosophy">課程介紹</a></li>
-        <li><a href="#campus">校園環境</a></li>
-        <li><a href="#philosophy">招生資訊</a></li>
-      </ul>
-      <button class="nav-cta">預約參觀</button>
+
+      <!-- Desktop nav-right -->
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#philosophy">關於我們</a></li>
+          <li><a href="#philosophy">課程介紹</a></li>
+          <li><a href="#campus">校園環境</a></li>
+          <li><a href="#features">招生資訊</a></li>
+        </ul>
+        <button class="nav-cta" onclick="openModal()">預約參觀</button>
+      </div>
+
+      <!-- Hamburger (mobile only) -->
+      <button
+        class="nav-hamburger"
+        id="hamburger"
+        aria-label="選單"
+        onclick="toggleDrawer()"
+      >
+        <span></span><span></span><span></span>
+      </button>
     </nav>
 
-    <!-- HERO -->
+    <!-- Mobile Drawer -->
+    <div class="nav-drawer" id="drawer">
+      <a href="#philosophy" onclick="closeDrawer()">關於我們</a>
+      <a href="#philosophy" onclick="closeDrawer()">課程介紹</a>
+      <a href="#campus" onclick="closeDrawer()">校園環境</a>
+      <a href="#features" onclick="closeDrawer()">招生資訊</a>
+      <button
+        class="drawer-cta"
+        onclick="
+          closeDrawer();
+          openModal();
+        "
+      >
+        預約參觀
+      </button>
+    </div>
+
+    <!-- ════════════════════════════════
+     HERO
+════════════════════════════════ -->
     <section class="hero">
       <img
         class="hero-bg"
@@ -800,7 +1257,7 @@
           孩子成長的<span class="accent">秘密花園</span>
         </div>
       </div>
-      <button class="hero-btn">
+      <button class="hero-btn" onclick="openModal()">
         立即預約參觀
         <img
           src="https://www.figma.com/api/mcp/asset/0e35cee8-3e78-4593-9f84-e2eb02ff5803"
@@ -809,7 +1266,9 @@
       </button>
     </section>
 
-    <!-- PHILOSOPHY -->
+    <!-- ════════════════════════════════
+     PHILOSOPHY
+════════════════════════════════ -->
     <section class="section philosophy" id="philosophy">
       <div class="sec-head" data-reveal>
         <h2 class="sec-h2">教育理念</h2>
@@ -901,7 +1360,9 @@
       </div>
     </section>
 
-    <!-- FEATURES -->
+    <!-- ════════════════════════════════
+     FEATURES
+════════════════════════════════ -->
     <section class="section features" id="features">
       <div class="sec-head" data-reveal>
         <h2 class="sec-h2">特色與優勢</h2>
@@ -1017,7 +1478,7 @@
               </div>
             </li>
           </ul>
-          <button class="campus-btn">查看校園環境</button>
+          <button class="campus-btn" onclick="openModal()">預約參觀校園</button>
         </div>
         <img
           class="campus-img"
@@ -1027,7 +1488,9 @@
       </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- ════════════════════════════════
+     FOOTER
+════════════════════════════════ -->
     <footer>
       <div class="foot-grid">
         <div>
@@ -1154,26 +1617,272 @@
       </div>
     </footer>
 
+    <!-- ════════════════════════════════
+     REGISTRATION MODAL
+════════════════════════════════ -->
+    <div
+      class="modal-overlay"
+      id="modalOverlay"
+      onclick="handleOverlayClick(event)"
+    >
+      <div class="modal" id="modal">
+        <!-- Form View -->
+        <div id="formView">
+          <div class="modal-bar"></div>
+          <div class="modal-head">
+            <div class="modal-head-text">
+              <h2>📋 預約參觀</h2>
+              <p>請填寫以下資料，我們將盡快與您聯繫</p>
+            </div>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+          </div>
+          <div class="modal-body">
+            <form id="regForm" onsubmit="handleSubmit(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>孩子姓名<span class="req">*</span></label>
+                  <input
+                    type="text"
+                    name="child_name"
+                    placeholder="請輸入孩子姓名"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label>出生年月日<span class="req">*</span></label>
+                  <input type="date" name="child_birthday" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>性別<span class="req">*</span></label>
+                  <select name="child_gender" required>
+                    <option value="">請選擇</option>
+                    <option>男生</option>
+                    <option>女生</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>欲參觀校區<span class="req">*</span></label>
+                  <select name="campus" required>
+                    <option value="">請選擇</option>
+                    <option>咪咪蒙特梭利幼兒園（東區）</option>
+                    <option>家田蒙特梭利幼兒園（西區）</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>家長姓名<span class="req">*</span></label>
+                  <input
+                    type="text"
+                    name="parent_name"
+                    placeholder="請輸入家長姓名"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label>聯絡電話<span class="req">*</span></label>
+                  <input
+                    type="tel"
+                    name="parent_phone"
+                    placeholder="09XX-XXXXXX"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>電子郵件</label>
+                <input
+                  type="email"
+                  name="parent_email"
+                  placeholder="your@email.com"
+                />
+              </div>
+              <div class="form-group">
+                <label>希望參觀時段 / 備註</label>
+                <textarea
+                  name="notes"
+                  placeholder="請說明希望的參觀時間或任何問題..."
+                ></textarea>
+              </div>
+              <button type="submit" class="submit-btn" id="submitBtn">
+                送出預約申請
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Success View -->
+        <div class="success-view" id="successView">
+          <span class="emoji">🎉</span>
+          <h3>預約申請已送出！</h3>
+          <p>
+            感謝您的預約，我們已收到您的資料。<br />園方將在
+            <strong>24小時內</strong> 以電話聯繫您確認參觀時間。
+          </p>
+          <button class="success-close" onclick="closeModal()">關閉</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ════════════════════════════════
+     SCRIPTS
+════════════════════════════════ -->
     <script>
-      // Navbar transparent ↔ solid on scroll
-      const nav = document.getElementById("nav");
+      // ── EmailJS (填入你的 key 後才會真正寄信) ──
+      const EJ_KEY = "YOUR_PUBLIC_KEY";
+      const EJ_SERVICE = "YOUR_SERVICE_ID";
+      const EJ_TEMPLATE = "YOUR_TEMPLATE_ID";
+      if (typeof emailjs !== "undefined" && EJ_KEY !== "YOUR_PUBLIC_KEY") {
+        emailjs.init({ publicKey: EJ_KEY });
+      }
+
+      // ── Navbar scroll ──
+      const navEl = document.getElementById("nav");
       function updateNav() {
-        if (window.scrollY > 60) {
-          nav.classList.replace("transparent", "solid");
-        } else {
-          nav.classList.replace("solid", "transparent");
-        }
+        navEl.classList.toggle("solid", window.scrollY > 60);
+        navEl.classList.toggle("transparent", window.scrollY <= 60);
       }
       window.addEventListener("scroll", updateNav, { passive: true });
       updateNav();
 
-      // Scroll reveal
-      const observer = new IntersectionObserver(
+      // ── Hamburger / Drawer ──
+      const hamburger = document.getElementById("hamburger");
+      const drawer = document.getElementById("drawer");
+
+      function toggleDrawer() {
+        const open = drawer.classList.toggle("open");
+        hamburger.classList.toggle("open", open);
+        document.body.style.overflow = open ? "hidden" : "";
+      }
+      function closeDrawer() {
+        drawer.classList.remove("open");
+        hamburger.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+      // Close drawer on ESC
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeDrawer();
+          closeModal();
+        }
+      });
+
+      // ── Modal ──
+      function openModal() {
+        document.getElementById("modalOverlay").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal() {
+        document.getElementById("modalOverlay").classList.remove("open");
+        document.body.style.overflow = "";
+        setTimeout(() => {
+          document.getElementById("formView").style.display = "";
+          document.getElementById("successView").style.display = "none";
+          document.getElementById("regForm").reset();
+          const btn = document.getElementById("submitBtn");
+          btn.disabled = false;
+          btn.textContent = "送出預約申請";
+        }, 350);
+      }
+      function handleOverlayClick(e) {
+        if (e.target === document.getElementById("modalOverlay")) closeModal();
+      }
+
+      // ── Storage ──
+      const SK = "mimicasa_regs";
+      function getRegs() {
+        try {
+          return JSON.parse(localStorage.getItem(SK)) || [];
+        } catch {
+          return [];
+        }
+      }
+      function saveReg(d) {
+        const list = getRegs();
+        list.push({ ...d, time: new Date().toLocaleString("zh-TW") });
+        localStorage.setItem(SK, JSON.stringify(list));
+        return list;
+      }
+      function buildHistory(list) {
+        if (!list.length) return "（尚無歷史報名資料）";
+        return list
+          .map(
+            (r, i) =>
+              `${i + 1}. [${r.time}] ${r.child_name} / ${r.child_gender} / 生日:${r.child_birthday} / 校區:${r.campus} / 家長:${r.parent_name} / 電話:${r.parent_phone} / Email:${r.parent_email || "未填"} / 備註:${r.notes || "無"}`,
+          )
+          .join("\n");
+      }
+
+      // ── Toast ──
+      function showToast(msg, err) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.className = "toast" + (err ? " error" : "");
+        setTimeout(() => t.classList.add("show"), 10);
+        setTimeout(() => t.classList.remove("show"), 4000);
+      }
+
+      // ── Submit ──
+      async function handleSubmit(e) {
+        e.preventDefault();
+        const f = e.target;
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        btn.textContent = "傳送中…";
+
+        const data = {
+          child_name: f.child_name.value.trim(),
+          child_birthday: f.child_birthday.value,
+          child_gender: f.child_gender.value,
+          campus: f.campus.value,
+          parent_name: f.parent_name.value.trim(),
+          parent_phone: f.parent_phone.value.trim(),
+          parent_email: f.parent_email.value.trim(),
+          notes: f.notes.value.trim(),
+        };
+
+        const allRegs = saveReg(data);
+
+        try {
+          if (EJ_KEY === "YOUR_PUBLIC_KEY") {
+            await new Promise((r) => setTimeout(r, 900));
+            console.log("📧 [Demo] Would send:", {
+              ...data,
+              history: buildHistory(allRegs),
+            });
+          } else {
+            await emailjs.send(EJ_SERVICE, EJ_TEMPLATE, {
+              to_email: "1354ark@gmail.com",
+              ...data,
+              parent_email: data.parent_email || "未填",
+              notes: data.notes || "無",
+              submit_time: new Date().toLocaleString("zh-TW"),
+              history_list: buildHistory(allRegs),
+              total_count: allRegs.length,
+            });
+          }
+          document.getElementById("formView").style.display = "none";
+          document.getElementById("successView").style.display = "block";
+        } catch (err) {
+          console.error(err);
+          showToast("❌ 送出失敗，請稍後再試", true);
+          btn.disabled = false;
+          btn.textContent = "送出預約申請";
+        }
+      }
+
+      // ── Scroll Reveal ──
+      const ro = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
             if (e.isIntersecting) {
               e.target.classList.add("on");
-              observer.unobserve(e.target);
+              ro.unobserve(e.target);
             }
           });
         },
@@ -1181,7 +1890,7 @@
       );
       document
         .querySelectorAll("[data-reveal]")
-        .forEach((el) => observer.observe(el));
+        .forEach((el) => ro.observe(el));
     </script>
   </body>
 </html>

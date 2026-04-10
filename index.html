@@ -46,6 +46,9 @@
 
       /* ════════════════════════════════
    NAVBAR
+   Grid 三欄 1fr|auto|1fr：
+   左=品牌 中=logo 右=連結
+   各欄獨立，永遠不互相擠壓
 ════════════════════════════════ */
       nav {
         position: fixed;
@@ -55,9 +58,9 @@
         z-index: 500;
         padding: 0 120px;
         height: 100px;
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
         align-items: center;
-        justify-content: space-between;
         transition:
           background 0.3s,
           box-shadow 0.3s,
@@ -75,14 +78,16 @@
         height: 68px;
       }
 
-      /* Brand (left) */
+      /* 左欄：品牌文字 */
       .nav-brand {
+        grid-column: 1;
+        justify-self: start;
         display: flex;
         flex-direction: column;
         gap: 6px;
-        width: 400px;
-        flex-shrink: 0;
+        min-width: 0;
       }
+      /* Hero 上方（透明狀態）：細體白字，對應 Figma */
       nav.transparent .nav-brand-main {
         font-size: 20px;
         font-weight: 300;
@@ -97,37 +102,41 @@
         color: rgba(255, 255, 255, 0.85);
         white-space: nowrap;
       }
+      /* 捲動後（白底）：粗體深色 */
       nav.solid .nav-brand-main {
         font-size: 16px;
         font-weight: 700;
         color: var(--text);
         letter-spacing: -0.4px;
         white-space: nowrap;
+        line-height: 24px;
       }
       nav.solid .nav-brand-sub {
         font-size: 11px;
+        font-weight: 400;
         color: var(--text-muted);
         white-space: nowrap;
       }
 
-      /* Center logo */
+      /* 中欄：logo */
       .nav-logo {
+        grid-column: 2;
+        justify-self: center;
         width: 142px;
         height: 100px;
         object-fit: contain;
-        flex-shrink: 0;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
         transition: opacity 0.3s;
       }
       nav.solid .nav-logo {
         opacity: 0;
         pointer-events: none;
+        width: 0;
       }
 
-      /* Right: links + cta */
+      /* 右欄：連結 + CTA */
       .nav-right {
+        grid-column: 3;
+        justify-self: end;
         display: flex;
         align-items: center;
         gap: 24px;
@@ -174,8 +183,10 @@
         background: #4a5e26;
       }
 
-      /* Hamburger button */
+      /* Hamburger（≤768px 才顯示） */
       .nav-hamburger {
+        grid-column: 3;
+        justify-self: end;
         display: none;
         flex-direction: column;
         justify-content: center;
@@ -186,7 +197,6 @@
         border: none;
         cursor: pointer;
         padding: 4px;
-        flex-shrink: 0;
       }
       .nav-hamburger span {
         display: block;
@@ -210,13 +220,10 @@
         transform: translateY(-7px) rotate(-45deg);
       }
 
-      /* Mobile drawer */
+      /* Mobile Drawer */
       .nav-drawer {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        inset: 0;
         z-index: 490;
         background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(16px);
@@ -317,6 +324,7 @@
         top: calc(50% + 226px);
         left: 50%;
         transform: translate(-50%, -50%);
+        z-index: 1;
         background: var(--green);
         color: white;
         border: none;
@@ -331,7 +339,6 @@
         gap: 5px;
         white-space: nowrap;
         transition: background 0.2s;
-        z-index: 1;
       }
       .hero-btn:hover {
         background: #4a5e26;
@@ -692,14 +699,12 @@
         font-size: 14px;
         color: var(--text-muted);
         line-height: 20px;
-        letter-spacing: -0.15px;
         margin-bottom: 24px;
       }
       .foot-col-name {
         font-size: 16px;
         color: #e6c9a8;
         line-height: 24px;
-        letter-spacing: -0.31px;
         margin-bottom: 12px;
       }
       .foot-info-list {
@@ -721,7 +726,6 @@
         font-size: 14px;
         color: var(--text-muted);
         line-height: 20px;
-        letter-spacing: -0.15px;
         white-space: nowrap;
       }
       .foot-hours {
@@ -753,7 +757,6 @@
       .foot-h-closed {
         font-size: 12px;
         color: #6a7282;
-        line-height: 16px;
       }
       .foot-bottom {
         padding-bottom: 33px;
@@ -766,7 +769,6 @@
       .foot-copy {
         font-size: 14px;
         color: var(--text-muted);
-        line-height: 20px;
       }
       .foot-links {
         display: flex;
@@ -783,7 +785,7 @@
       }
 
       /* ════════════════════════════════
-   MODAL (Registration Form)
+   MODAL
 ════════════════════════════════ */
       .modal-overlay {
         position: fixed;
@@ -855,7 +857,6 @@
         align-items: center;
         justify-content: center;
         transition: all 0.2s;
-        flex-shrink: 0;
       }
       .modal-close:hover {
         background: #e0e0e0;
@@ -930,8 +931,6 @@
         opacity: 0.6;
         cursor: not-allowed;
       }
-
-      /* Success view */
       .success-view {
         display: none;
         text-align: center;
@@ -955,7 +954,6 @@
       .success-close {
         margin: 24px auto 0;
         display: inline-flex;
-        align-items: center;
         background: var(--green);
         color: white;
         border: none;
@@ -1023,14 +1021,45 @@
    RESPONSIVE
 ════════════════════════════════ */
 
-      /* Tablet (≤1024px) */
+      /* 1200px：縮 padding + gap，logo 略縮 */
+      @media (max-width: 1200px) {
+        nav {
+          padding: 0 60px;
+        }
+        .nav-links {
+          gap: 16px;
+        }
+        .nav-right {
+          gap: 16px;
+        }
+        .nav-links a {
+          font-size: 13px;
+        }
+      }
+
+      /* 1024px：再縮，logo 縮小避免佔位太多 */
       @media (max-width: 1024px) {
         nav {
           padding: 0 40px;
         }
-        .nav-brand {
-          width: auto;
+        .nav-links {
+          gap: 10px;
         }
+        .nav-right {
+          gap: 10px;
+        }
+        .nav-links a {
+          font-size: 12px;
+        }
+        .nav-cta {
+          padding: 8px 12px;
+          font-size: 12px;
+        }
+        .nav-logo {
+          width: 90px;
+          height: 64px;
+        }
+
         .section {
           padding: 80px 40px;
         }
@@ -1071,22 +1100,26 @@
         }
       }
 
-      /* Tablet/Mobile (≤768px) — hamburger kicks in */
+      /* 768px：漢堡選單，nav 改為 2 欄（logo 完全隱藏） */
       @media (max-width: 768px) {
         nav {
           padding: 0 20px;
           height: 64px;
+          grid-template-columns: 1fr auto; /* 兩欄：左品牌 右漢堡 */
         }
         nav.solid {
           height: 64px;
         }
-        .nav-brand {
-          width: auto;
-        }
+
+        /* 兩種狀態都粗體 */
         nav.transparent .nav-brand-main,
         nav.solid .nav-brand-main {
-          font-size: 14px;
+          font-size: 15px;
           font-weight: 700;
+          white-space: nowrap;
+          line-height: 22px;
+        }
+        nav.transparent .nav-brand-main {
           color: white;
         }
         nav.solid .nav-brand-main {
@@ -1096,24 +1129,28 @@
         nav.solid .nav-brand-sub {
           display: none;
         }
+
         .nav-logo {
           display: none !important;
         }
-
-        /* Hide desktop nav-right, show hamburger */
         .nav-right {
-          display: none;
+          display: none !important;
         }
         .nav-hamburger {
           display: flex;
+          grid-column: 2;
+          justify-self: end;
         }
 
+        /* Hero */
         .hero {
           height: 600px;
         }
         .hero-text {
           left: 20px;
           right: 20px;
+          top: 50%;
+          transform: translateY(-60%);
         }
         .hero-line1,
         .hero-line2 {
@@ -1125,23 +1162,16 @@
         .hero-line2 {
           text-align: left;
         }
+        /* CTA：保持 absolute，固定在 hero 底部 */
         .hero-btn {
-          padding: 16px 24px;
-          font-size: 14px;
-          bottom: auto;
-          top: auto;
-          position: relative;
-          transform: none;
-          left: auto;
-          margin: 20px auto 0;
-          display: flex;
-        }
-        /* Re-position hero btn for mobile */
-        .hero-actions {
           position: absolute;
-          bottom: 40px;
+          top: auto;
+          bottom: 48px;
           left: 50%;
           transform: translateX(-50%);
+          padding: 16px 28px;
+          font-size: 15px;
+          white-space: nowrap;
         }
 
         .section {
@@ -1183,6 +1213,10 @@
         .sec-h2 {
           font-size: 26px;
         }
+        .hero-btn {
+          font-size: 14px;
+          padding: 14px 24px;
+        }
       }
     </style>
   </head>
@@ -1191,18 +1225,20 @@
      NAVBAR
 ════════════════════════════════ -->
     <nav id="nav" class="transparent">
+      <!-- 左：品牌文字 -->
       <div class="nav-brand">
         <div class="nav-brand-main">咪咪 & 家田蒙特梭利幼兒園</div>
         <div class="nav-brand-sub">MImi & Casa Montessori Preschool</div>
       </div>
 
+      <!-- 中：Logo -->
       <img
         class="nav-logo"
         src="https://www.figma.com/api/mcp/asset/509f0747-81c2-4886-80b7-730b5d2eed70"
-        alt="logo"
+        alt="咪咪家田 Logo"
       />
 
-      <!-- Desktop nav-right -->
+      <!-- 右：連結 + CTA（桌機） -->
       <div class="nav-right">
         <ul class="nav-links">
           <li><a href="#philosophy">關於我們</a></li>
@@ -1213,7 +1249,7 @@
         <button class="nav-cta" onclick="openModal()">預約參觀</button>
       </div>
 
-      <!-- Hamburger (mobile only) -->
+      <!-- 右：漢堡（平板/手機） -->
       <button
         class="nav-hamburger"
         id="hamburger"
@@ -1248,7 +1284,7 @@
       <img
         class="hero-bg"
         src="https://www.figma.com/api/mcp/asset/75a542b4-6948-45f2-9beb-85ac4b0d5010"
-        alt="校園"
+        alt="校園環境"
       />
       <div class="hero-overlay"></div>
       <div class="hero-text">
@@ -1443,7 +1479,7 @@
               <div class="check">
                 <img
                   src="https://www.figma.com/api/mcp/asset/e2774897-9936-4253-ada5-6d5692673e17"
-                  alt=""
+                  alt="✓"
                 />
               </div>
               <div>
@@ -1457,7 +1493,7 @@
               <div class="check">
                 <img
                   src="https://www.figma.com/api/mcp/asset/e2774897-9936-4253-ada5-6d5692673e17"
-                  alt=""
+                  alt="✓"
                 />
               </div>
               <div>
@@ -1469,7 +1505,7 @@
               <div class="check">
                 <img
                   src="https://www.figma.com/api/mcp/asset/e2774897-9936-4253-ada5-6d5692673e17"
-                  alt=""
+                  alt="✓"
                 />
               </div>
               <div>
@@ -1537,19 +1573,22 @@
               <img
                 src="https://www.figma.com/api/mcp/asset/f0ad9baf-99bf-49a3-b56e-1d0560a2a22d"
                 alt=""
-              /><span>嘉義市東區中山路123號</span>
+              />
+              <span>嘉義市東區中山路123號</span>
             </div>
             <div class="foot-info-row">
               <img
                 src="https://www.figma.com/api/mcp/asset/b383f43c-e3c4-44b6-a6d2-3ee675c4c43c"
                 alt=""
-              /><span>(05) 1234-5678</span>
+              />
+              <span>(05) 1234-5678</span>
             </div>
             <div class="foot-info-row">
               <img
                 src="https://www.figma.com/api/mcp/asset/8091ac0e-95a6-442d-bc7f-480a191cb9ad"
                 alt=""
-              /><span>east@happykids.edu.tw</span>
+              />
+              <span>east@happykids.edu.tw</span>
             </div>
           </div>
         </div>
@@ -1561,19 +1600,22 @@
               <img
                 src="https://www.figma.com/api/mcp/asset/f0ad9baf-99bf-49a3-b56e-1d0560a2a22d"
                 alt=""
-              /><span>嘉義市西區民族路456號</span>
+              />
+              <span>嘉義市西區民族路456號</span>
             </div>
             <div class="foot-info-row">
               <img
                 src="https://www.figma.com/api/mcp/asset/b383f43c-e3c4-44b6-a6d2-3ee675c4c43c"
                 alt=""
-              /><span>(05) 8765-4321</span>
+              />
+              <span>(05) 8765-4321</span>
             </div>
             <div class="foot-info-row">
               <img
                 src="https://www.figma.com/api/mcp/asset/8091ac0e-95a6-442d-bc7f-480a191cb9ad"
                 alt=""
-              /><span>west@happykids.edu.tw</span>
+              />
+              <span>west@happykids.edu.tw</span>
             </div>
           </div>
         </div>
@@ -1626,7 +1668,6 @@
       onclick="handleOverlayClick(event)"
     >
       <div class="modal" id="modal">
-        <!-- Form View -->
         <div id="formView">
           <div class="modal-bar"></div>
           <div class="modal-head">
@@ -1713,7 +1754,6 @@
           </div>
         </div>
 
-        <!-- Success View -->
         <div class="success-view" id="successView">
           <span class="emoji">🎉</span>
           <h3>預約申請已送出！</h3>
@@ -1726,14 +1766,14 @@
       </div>
     </div>
 
-    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
     <!-- ════════════════════════════════
      SCRIPTS
 ════════════════════════════════ -->
     <script>
-      // ── EmailJS (填入你的 key 後才會真正寄信) ──
+      // ── EmailJS ──
+      // 填入你的 key 後才會真正寄信
       const EJ_KEY = "YOUR_PUBLIC_KEY";
       const EJ_SERVICE = "YOUR_SERVICE_ID";
       const EJ_TEMPLATE = "YOUR_TEMPLATE_ID";
@@ -1744,8 +1784,9 @@
       // ── Navbar scroll ──
       const navEl = document.getElementById("nav");
       function updateNav() {
-        navEl.classList.toggle("solid", window.scrollY > 60);
-        navEl.classList.toggle("transparent", window.scrollY <= 60);
+        const scrolled = window.scrollY > 60;
+        navEl.classList.toggle("solid", scrolled);
+        navEl.classList.toggle("transparent", !scrolled);
       }
       window.addEventListener("scroll", updateNav, { passive: true });
       updateNav();
@@ -1755,16 +1796,15 @@
       const drawer = document.getElementById("drawer");
 
       function toggleDrawer() {
-        const open = drawer.classList.toggle("open");
-        hamburger.classList.toggle("open", open);
-        document.body.style.overflow = open ? "hidden" : "";
+        const isOpen = drawer.classList.toggle("open");
+        hamburger.classList.toggle("open", isOpen);
+        document.body.style.overflow = isOpen ? "hidden" : "";
       }
       function closeDrawer() {
         drawer.classList.remove("open");
         hamburger.classList.remove("open");
         document.body.style.overflow = "";
       }
-      // Close drawer on ESC
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
           closeDrawer();
@@ -1774,6 +1814,7 @@
 
       // ── Modal ──
       function openModal() {
+        closeDrawer();
         document.getElementById("modalOverlay").classList.add("open");
         document.body.style.overflow = "hidden";
       }
@@ -1793,7 +1834,7 @@
         if (e.target === document.getElementById("modalOverlay")) closeModal();
       }
 
-      // ── Storage ──
+      // ── LocalStorage ──
       const SK = "mimicasa_regs";
       function getRegs() {
         try {
@@ -1827,7 +1868,7 @@
         setTimeout(() => t.classList.remove("show"), 4000);
       }
 
-      // ── Submit ──
+      // ── Form Submit ──
       async function handleSubmit(e) {
         e.preventDefault();
         const f = e.target;
@@ -1850,6 +1891,7 @@
 
         try {
           if (EJ_KEY === "YOUR_PUBLIC_KEY") {
+            // Demo mode
             await new Promise((r) => setTimeout(r, 900));
             console.log("📧 [Demo] Would send:", {
               ...data,

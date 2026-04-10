@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -23,960 +23,644 @@
       }
 
       :root {
-        --green: #4a7c59;
-        --green-dark: #2d5a3d;
-        --green-light: #e8f2eb;
-        --green-mid: #6b9e7a;
-        --accent: #8dc26f;
-        --warm: #f5efe0;
-        --warm-dark: #e8dcc8;
-        --text: #1a1a1a;
-        --text-mid: #555;
-        --text-light: #888;
-        --white: #ffffff;
-        --border: #e2eae5;
-        --bg: #fafcfa;
+        --green: #59702f;
+        --green-light: rgba(97, 162, 60, 0.1);
+        --green-bright: #61a23c;
+        --text: #101828;
+        --text-mid: #4a5565;
+        --text-muted: #99a1af;
+        --cream: #e6c9a8;
+        --bg-light: #fafaf9;
+        --border: #f3f4f6;
+        --dark-bg: #2d2d2d;
+        --dark-border: #364153;
       }
-
       body {
         font-family: "Noto Sans TC", sans-serif;
-        background: var(--bg);
         color: var(--text);
         overflow-x: hidden;
-        line-height: 1.6;
       }
 
-      /* ── NAV ── */
+      /* ── FIXED NAVBAR ── */
       nav {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        z-index: 200;
-        height: 68px;
+        z-index: 500;
+        padding: 16px 120px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 6%;
-        background: rgba(255, 255, 255, 0.95);
+        transition:
+          background 0.3s,
+          box-shadow 0.3s;
+      }
+      nav.transparent {
+        background: transparent;
+      }
+      nav.solid {
+        background: rgba(255, 255, 255, 0.96);
         backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border);
-        transition: box-shadow 0.3s;
+        box-shadow:
+          0 1px 0 var(--border),
+          0 4px 20px rgba(0, 0, 0, 0.06);
       }
-      nav.scrolled {
-        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
-      }
-
       .nav-brand {
         display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
+        flex-direction: column;
+        gap: 1px;
       }
-      .nav-brand-icon {
-        width: 38px;
-        height: 38px;
-        background: var(--green-light);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.3rem;
+      nav.transparent .nav-brand-main {
+        font-size: 20px;
+        font-weight: 300;
+        color: white;
+        letter-spacing: -0.71px;
+        white-space: nowrap;
       }
-      .nav-brand-text {
-        line-height: 1.2;
+      nav.transparent .nav-brand-sub {
+        font-size: 13px;
+        font-weight: 300;
+        color: white;
+        white-space: nowrap;
       }
-      .nav-brand-text .main {
-        font-family: "Noto Serif TC", serif;
-        font-size: 0.9rem;
+      nav.solid .nav-brand-main {
+        font-size: 16px;
         font-weight: 700;
         color: var(--text);
+        letter-spacing: -0.4px;
+        white-space: nowrap;
       }
-      .nav-brand-text .sub {
-        font-size: 0.68rem;
-        color: var(--text-light);
-        letter-spacing: 0.02em;
+      nav.solid .nav-brand-sub {
+        font-size: 11px;
+        color: var(--text-muted);
+        white-space: nowrap;
       }
-
+      .nav-logo {
+        width: 100px;
+        height: 70px;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+      nav.solid .nav-logo {
+        display: none;
+      }
       .nav-links {
         display: flex;
-        align-items: center;
-        gap: 36px;
+        gap: 24px;
         list-style: none;
+        align-items: center;
       }
-      .nav-links a {
+      nav.transparent .nav-links a {
+        font-size: 14px;
+        color: white;
         text-decoration: none;
-        font-size: 0.88rem;
+        letter-spacing: -0.15px;
+        transition: opacity 0.2s;
+      }
+      nav.transparent .nav-links a:hover {
+        opacity: 0.75;
+      }
+      nav.solid .nav-links a {
+        font-size: 14px;
         color: var(--text-mid);
-        font-weight: 500;
+        text-decoration: none;
         transition: color 0.2s;
       }
-      .nav-links a:hover {
+      nav.solid .nav-links a:hover {
         color: var(--green);
       }
-
       .nav-cta {
         background: var(--green);
         color: white;
         border: none;
-        padding: 10px 22px;
-        border-radius: 8px;
+        padding: 10px 16px;
+        border-radius: 10px;
         font-family: "Noto Sans TC", sans-serif;
-        font-size: 0.88rem;
-        font-weight: 500;
+        font-size: 14px;
+        font-weight: 700;
         cursor: pointer;
-        transition: all 0.25s;
+        white-space: nowrap;
+        transition: background 0.2s;
       }
       .nav-cta:hover {
-        background: var(--green-dark);
-        transform: translateY(-1px);
+        background: #4a5e26;
       }
 
       /* ── HERO ── */
       .hero {
-        min-height: 100vh;
-        padding: 100px 6% 80px;
-        display: flex;
-        align-items: center;
         position: relative;
+        height: 800px;
         overflow: hidden;
       }
-      .hero::before {
-        content: "";
+      .hero-bg {
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, var(--warm) 0%, var(--bg) 60%);
-        z-index: 0;
-      }
-
-      .hero-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 80px;
-        align-items: center;
-        position: relative;
-        z-index: 1;
-      }
-
-      .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: var(--green-light);
-        color: var(--green-dark);
-        padding: 5px 14px;
-        border-radius: 20px;
-        font-size: 0.78rem;
-        font-weight: 500;
-        margin-bottom: 20px;
-        border: 1px solid rgba(74, 124, 89, 0.2);
-      }
-      .hero-badge::before {
-        content: "●";
-        font-size: 0.5rem;
-        color: var(--accent);
-      }
-
-      .hero h1 {
-        font-family: "Noto Serif TC", serif;
-        font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-        font-weight: 900;
-        line-height: 1.25;
-        margin-bottom: 20px;
-        color: var(--text);
-      }
-      .hero h1 .green {
-        color: var(--green);
-      }
-
-      .hero-desc {
-        font-size: 1rem;
-        line-height: 1.9;
-        color: var(--text-mid);
-        margin-bottom: 36px;
-        max-width: 480px;
-      }
-
-      .hero-btns {
-        display: flex;
-        gap: 14px;
-        align-items: center;
-        flex-wrap: wrap;
-        margin-bottom: 52px;
-      }
-      .btn-main {
-        background: var(--green);
-        color: white;
-        border: none;
-        padding: 13px 28px;
-        border-radius: 8px;
-        font-family: "Noto Sans TC", sans-serif;
-        font-size: 0.95rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.25s;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 4px 16px rgba(74, 124, 89, 0.3);
-      }
-      .btn-main:hover {
-        background: var(--green-dark);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(74, 124, 89, 0.4);
-      }
-      .btn-outline {
-        background: transparent;
-        color: var(--text);
-        border: 1.5px solid var(--border);
-        padding: 12px 24px;
-        border-radius: 8px;
-        font-family: "Noto Sans TC", sans-serif;
-        font-size: 0.95rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.25s;
-      }
-      .btn-outline:hover {
-        border-color: var(--green);
-        color: var(--green);
-      }
-
-      .hero-stats {
-        display: flex;
-        gap: 40px;
-      }
-      .stat h3 {
-        font-family: "Noto Serif TC", serif;
-        font-size: 2rem;
-        font-weight: 900;
-        color: var(--green);
-        line-height: 1;
-      }
-      .stat p {
-        font-size: 0.8rem;
-        color: var(--text-light);
-        margin-top: 4px;
-      }
-
-      .hero-image {
-        position: relative;
-      }
-      .hero-img-wrap {
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12);
-        aspect-ratio: 4/3;
-        background: var(--green-light);
-      }
-      .hero-img-wrap img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
-      .hero-img-placeholder {
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #c8dfc8 0%, #a8c8a8 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 5rem;
-      }
-      .hero-float-card {
+      .hero-overlay {
         position: absolute;
-        bottom: -20px;
-        left: -24px;
-        background: white;
-        border-radius: 16px;
-        padding: 16px 20px;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        inset: 0;
+        background: rgba(0, 0, 0, 0.35);
+      }
+      .hero-text {
+        position: absolute;
+        top: 50%;
+        left: 120px;
+        transform: translateY(-50%);
         display: flex;
-        align-items: center;
-        gap: 12px;
-        border: 1px solid var(--border);
+        flex-direction: column;
+        gap: 16px;
       }
-      .float-icon {
-        font-size: 1.8rem;
+      .hero-line1 {
+        font-size: 60px;
+        font-weight: 300;
+        line-height: 75px;
+        color: white;
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        letter-spacing: 0.26px;
+        white-space: nowrap;
       }
-      .float-text .num {
-        font-family: "Noto Serif TC", serif;
-        font-size: 1.3rem;
-        font-weight: 900;
-        color: var(--green);
+      .hero-line2 {
+        font-size: 60px;
+        font-weight: 300;
+        line-height: 75px;
+        color: white;
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        letter-spacing: 0.26px;
+        white-space: nowrap;
+        text-align: right;
       }
-      .float-text .label {
-        font-size: 0.75rem;
-        color: var(--text-light);
+      .hero-line2 .accent {
+        color: #c9b8a3;
       }
-
-      /* ── SECTION COMMON ── */
-      .section {
-        padding: 96px 6%;
-      }
-      .section-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      .section-header {
-        text-align: center;
-        margin-bottom: 60px;
-      }
-      .section-tag {
-        display: inline-block;
-        font-size: 0.78rem;
-        font-weight: 500;
-        color: var(--green);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        margin-bottom: 12px;
-      }
-      .section-title {
-        font-family: "Noto Serif TC", serif;
-        font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      .hero-btn {
+        position: absolute;
+        top: calc(50% + 226px);
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--green);
+        color: white;
+        border: none;
+        padding: 24px 32px;
+        border-radius: 10px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 16px;
         font-weight: 700;
-        line-height: 1.35;
-        margin-bottom: 14px;
-      }
-      .section-sub {
-        font-size: 0.92rem;
-        color: var(--text-mid);
-        line-height: 1.8;
-      }
-
-      /* ── NEWS ── */
-      .news {
-        background: white;
-      }
-      .news-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-      }
-      .news-card {
-        border: 1.5px solid var(--border);
-        border-radius: 16px;
-        padding: 28px;
-        transition: all 0.3s;
         cursor: pointer;
-        background: var(--bg);
-      }
-      .news-card:hover {
-        border-color: var(--green);
-        transform: translateY(-4px);
-        box-shadow: 0 12px 36px rgba(74, 124, 89, 0.1);
-      }
-      .news-date {
-        font-size: 0.78rem;
-        color: var(--green);
-        font-weight: 500;
-        margin-bottom: 10px;
-      }
-      .news-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        background: var(--green-light);
         display: flex;
         align-items: center;
-        justify-content: center;
-        font-size: 1.3rem;
+        gap: 5px;
+        white-space: nowrap;
+        transition: background 0.2s;
+      }
+      .hero-btn:hover {
+        background: #4a5e26;
+      }
+      .hero-btn img {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* ── SECTION ── */
+      .section {
+        padding: 80px 120px;
+      }
+      .sec-head {
+        text-align: center;
+        margin-bottom: 64px;
+      }
+      .sec-h2 {
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 40px;
+        letter-spacing: 0.37px;
+        color: var(--text);
         margin-bottom: 16px;
       }
-      .news-title {
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        line-height: 1.5;
-      }
-      .news-desc {
-        font-size: 0.85rem;
+      .sec-sub {
+        font-size: 16px;
         color: var(--text-mid);
-        line-height: 1.8;
+        line-height: 24px;
+        letter-spacing: -0.31px;
       }
 
       /* ── PHILOSOPHY ── */
       .philosophy {
-        background: var(--warm);
+        background: white;
       }
-      .philosophy-inner {
+      .phil-top {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 80px;
-        align-items: center;
+        grid-template-columns: 576px 1fr;
+        gap: 64px;
+        align-items: start;
+        margin-bottom: 64px;
       }
-      .philosophy-img {
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
-        aspect-ratio: 4/3;
+      .phil-img-wrap {
+        position: relative;
+        height: 500px;
       }
-      .philosophy-img-placeholder {
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #b8d4b8 0%, #96be96 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 5rem;
+      .phil-deco {
+        position: absolute;
+        top: -32px;
+        right: -32px;
+        width: 160px;
+        height: 160px;
+        background: #e6c9a8;
+        border-radius: 24px;
+        z-index: 0;
       }
-      .philosophy-values {
+      .phil-img {
+        position: absolute;
+        inset: 0;
+        width: 576px;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 24px;
+        z-index: 1;
+      }
+      .phil-values {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 24px;
+        padding-top: 90px;
       }
-      .value-item {
+      .val-item {
         display: flex;
-        gap: 16px;
+        gap: 20px;
         align-items: flex-start;
-        background: white;
-        border-radius: 14px;
-        padding: 20px;
-        border: 1px solid rgba(74, 124, 89, 0.12);
-        transition: all 0.25s;
       }
-      .value-item:hover {
-        box-shadow: 0 8px 24px rgba(74, 124, 89, 0.1);
-        transform: translateX(4px);
-      }
-      .value-icon {
-        width: 40px;
-        height: 40px;
-        flex-shrink: 0;
-        border-radius: 10px;
+      .val-icon {
+        width: 48px;
+        height: 48px;
         background: var(--green-light);
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.1rem;
+        flex-shrink: 0;
       }
-      .value-title {
-        font-size: 0.95rem;
-        font-weight: 700;
-        margin-bottom: 4px;
+      .val-icon img {
+        width: 24px;
+        height: 24px;
       }
-      .value-desc {
-        font-size: 0.82rem;
+      .val-title {
+        font-size: 20px;
+        line-height: 28px;
+        letter-spacing: -0.45px;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+      .val-desc {
+        font-size: 16px;
         color: var(--text-mid);
-        line-height: 1.7;
+        line-height: 26px;
+        letter-spacing: -0.31px;
       }
-
-      /* ── METHODS ── */
-      .methods {
-        background: white;
-      }
-      .methods-grid {
+      .phil-bottom {
+        background: var(--bg-light);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 65px;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 32px;
+        gap: 48px;
       }
-      .method-card {
-        background: var(--bg);
-        border-radius: 20px;
-        padding: 40px;
-        border: 1.5px solid var(--border);
-        transition: all 0.3s;
-      }
-      .method-card:hover {
-        border-color: var(--green-mid);
-        box-shadow: 0 12px 40px rgba(74, 124, 89, 0.08);
-      }
-      .method-tag {
-        font-size: 0.72rem;
-        font-weight: 600;
-        color: var(--green);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .method-tag::before {
-        content: "";
-        width: 20px;
-        height: 2px;
-        background: var(--green);
-        border-radius: 1px;
-      }
-      .method-title {
-        font-family: "Noto Serif TC", serif;
-        font-size: 1.5rem;
-        font-weight: 700;
+      .phil-tag {
+        display: inline-block;
+        background: var(--green-light);
+        color: var(--green-bright);
+        font-size: 14px;
+        padding: 4px 16px;
+        border-radius: 9999px;
         margin-bottom: 16px;
-        color: var(--text);
       }
-      .method-desc {
-        font-size: 0.88rem;
+      .phil-title {
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: 0.07px;
+        color: var(--text);
+        margin-bottom: 12px;
+      }
+      .phil-desc {
+        font-size: 16px;
         color: var(--text-mid);
-        line-height: 1.9;
+        line-height: 26px;
+        letter-spacing: -0.31px;
+      }
+      .phil-desc + .phil-desc {
+        margin-top: 10px;
       }
 
       /* ── FEATURES ── */
       .features {
-        background: var(--bg);
+        background: var(--bg-light);
       }
-      .features-grid {
+      .feat-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        gap: 32px;
+        margin-bottom: 64px;
       }
-      .feature-card {
+      .feat-card {
         background: white;
-        border-radius: 16px;
-        padding: 28px;
         border: 1px solid var(--border);
-        transition: all 0.3s;
+        border-radius: 16px;
+        padding: 32px;
         text-align: center;
+        transition:
+          transform 0.25s,
+          box-shadow 0.25s;
       }
-      .feature-card:hover {
-        border-color: var(--green-mid);
+      .feat-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.07);
       }
-      .feature-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 14px;
+      .feat-icon {
+        width: 56px;
+        height: 56px;
         background: var(--green-light);
+        border-radius: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
-        margin: 0 auto 16px;
+        margin: 0 auto 24px;
       }
-      .feature-title {
-        font-size: 0.95rem;
-        font-weight: 700;
+      .feat-icon img {
+        width: 28px;
+        height: 28px;
+      }
+      .feat-title {
+        font-size: 20px;
+        line-height: 28px;
+        letter-spacing: -0.45px;
+        color: var(--text);
         margin-bottom: 8px;
       }
-      .feature-desc {
-        font-size: 0.82rem;
+      .feat-desc {
+        font-size: 16px;
         color: var(--text-mid);
-        line-height: 1.75;
+        line-height: 26px;
+        letter-spacing: -0.31px;
       }
 
       /* ── CAMPUS ── */
-      .campus {
-        padding: 96px 6%;
+      .campus-head {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+      .campus-card {
         background: white;
-        position: relative;
+        border: 1px solid var(--border);
+        border-radius: 24px;
         overflow: hidden;
-      }
-      .campus::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 50%;
-        height: 100%;
-        background: var(--warm);
-        z-index: 0;
-      }
-      .campus-inner {
-        max-width: 1200px;
-        margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 80px;
-        align-items: center;
-        position: relative;
-        z-index: 1;
       }
       .campus-content {
+        padding: 251px 64px 64px;
       }
       .campus-tag {
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--green);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        margin-bottom: 10px;
+        display: inline-block;
+        background: var(--green-light);
+        color: var(--green-bright);
+        font-size: 14px;
+        padding: 4px 16px;
+        border-radius: 9999px;
+        margin-bottom: 16px;
       }
-      .campus-title {
-        font-family: "Noto Serif TC", serif;
-        font-size: clamp(1.6rem, 2.8vw, 2.4rem);
-        font-weight: 700;
-        margin-bottom: 28px;
+      .campus-h3 {
+        font-size: 30px;
+        line-height: 36px;
+        letter-spacing: 0.4px;
+        color: var(--text);
+        margin-bottom: 32px;
       }
       .campus-list {
         list-style: none;
         display: flex;
         flex-direction: column;
-        gap: 16px;
-        margin-bottom: 36px;
+        gap: 24px;
+        margin-bottom: 40px;
       }
       .campus-list li {
         display: flex;
-        gap: 12px;
+        gap: 16px;
         align-items: flex-start;
-        font-size: 0.9rem;
-        line-height: 1.6;
       }
-      .campus-list li .check {
-        width: 20px;
-        height: 20px;
-        flex-shrink: 0;
-        background: var(--green);
+      .check {
+        width: 24px;
+        height: 24px;
+        background: var(--green-bright);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
-        font-size: 0.65rem;
+        flex-shrink: 0;
         margin-top: 2px;
       }
-      .campus-list li .check-title {
-        font-weight: 600;
-        margin-bottom: 2px;
+      .check img {
+        width: 14px;
+        height: 14px;
       }
-      .campus-list li .check-desc {
+      .check-t {
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.31px;
+        color: var(--text);
+        margin-bottom: 4px;
+      }
+      .check-d {
+        font-size: 14px;
         color: var(--text-mid);
-        font-size: 0.83rem;
+        line-height: 22.75px;
+        letter-spacing: -0.15px;
       }
-
+      .campus-btn {
+        background: var(--green-bright);
+        color: white;
+        border: none;
+        padding: 16px 32px;
+        border-radius: 10px;
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .campus-btn:hover {
+        background: #4e8830;
+      }
       .campus-img {
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12);
-        aspect-ratio: 4/3;
-      }
-      .campus-img-placeholder {
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, #96c896 0%, #6aae6a 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 6rem;
+        object-fit: cover;
+        display: block;
       }
 
       /* ── FOOTER ── */
       footer {
-        background: #1a2820;
-        color: rgba(255, 255, 255, 0.75);
-        padding: 72px 6% 36px;
+        background: var(--dark-bg);
+        padding: 64px 120px 0;
       }
-      .footer-inner {
-        max-width: 1200px;
-        margin: 0 auto;
+      .foot-grid {
         display: grid;
-        grid-template-columns: 2fr 1fr 1fr 1fr;
+        grid-template-columns: repeat(4, 1fr);
         gap: 48px;
         padding-bottom: 48px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        margin-bottom: 36px;
+        border-bottom: 1px solid var(--dark-border);
+        margin-bottom: 33px;
       }
-      .footer-brand .logo-row {
+      .foot-brand-row {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 14px;
+        gap: 12px;
+        margin-bottom: 24px;
       }
-      .footer-logo-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        background: var(--green);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1rem;
+      .foot-logo {
+        width: 50px;
+        height: 40px;
+        object-fit: contain;
       }
-      .footer-logo-text .main {
-        font-family: "Noto Serif TC", serif;
-        font-size: 0.88rem;
-        font-weight: 700;
+      .foot-name {
+        font-size: 16px;
+        color: white;
+        letter-spacing: -0.71px;
+        white-space: nowrap;
+      }
+      .foot-sub {
+        font-size: 12px;
+        color: white;
+        white-space: nowrap;
+      }
+      .foot-tag {
+        font-size: 14px;
         color: white;
       }
-      .footer-logo-text .sub {
-        font-size: 0.65rem;
-        color: rgba(255, 255, 255, 0.4);
+      .foot-tagline {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 22.75px;
+        letter-spacing: -0.15px;
+        margin-bottom: 24px;
+        max-width: 255px;
       }
-      .footer-brand p {
-        font-size: 0.82rem;
-        line-height: 1.8;
-        max-width: 260px;
-      }
-      .footer-social {
+      .foot-social {
         display: flex;
-        gap: 10px;
-        margin-top: 20px;
+        gap: 12px;
       }
-      .social-btn {
-        width: 34px;
-        height: 34px;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.07);
+      .soc-btn {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.9rem;
         cursor: pointer;
         transition: background 0.2s;
       }
-      .social-btn:hover {
+      .soc-btn:hover {
         background: var(--green);
       }
-
-      .footer-col h4 {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 16px;
+      .soc-btn img {
+        width: 20px;
+        height: 20px;
       }
-      .footer-col-tag {
-        font-size: 0.7rem;
-        font-weight: 600;
-        color: var(--accent);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 6px;
+      .foot-col-label {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 20px;
+        letter-spacing: -0.15px;
+        margin-bottom: 24px;
       }
-      .footer-col p,
-      .footer-col address {
-        font-style: normal;
-        font-size: 0.8rem;
-        line-height: 1.9;
-        color: rgba(255, 255, 255, 0.55);
+      .foot-col-name {
+        font-size: 16px;
+        color: #e6c9a8;
+        line-height: 24px;
+        letter-spacing: -0.31px;
+        margin-bottom: 12px;
       }
-      .footer-col a {
-        color: rgba(255, 255, 255, 0.55);
-        text-decoration: none;
-        font-size: 0.8rem;
-        display: block;
-        margin-bottom: 8px;
-        transition: color 0.2s;
-      }
-      .footer-col a:hover {
-        color: var(--accent);
-      }
-
-      .footer-bottom {
-        max-width: 1200px;
-        margin: 0 auto;
+      .foot-info-list {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.78rem;
-        color: rgba(255, 255, 255, 0.3);
-        flex-wrap: wrap;
-        gap: 12px;
+        flex-direction: column;
+        gap: 8px;
       }
-      .footer-bottom-links {
-        display: flex;
-        gap: 20px;
-      }
-      .footer-bottom-links a {
-        color: rgba(255, 255, 255, 0.3);
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-      .footer-bottom-links a:hover {
-        color: rgba(255, 255, 255, 0.6);
-      }
-
-      /* ── MODAL ── */
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        z-index: 500;
-        background: rgba(0, 0, 0, 0.55);
-        backdrop-filter: blur(6px);
+      .foot-info-row {
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 20px;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s;
+        gap: 8px;
       }
-      .modal-overlay.active {
-        opacity: 1;
-        pointer-events: all;
-      }
-
-      .modal {
-        background: white;
-        border-radius: 24px;
-        width: 100%;
-        max-width: 520px;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.2);
-        transform: translateY(20px) scale(0.97);
-        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-      .modal-overlay.active .modal {
-        transform: none;
-      }
-
-      .modal-top {
-        height: 5px;
-        background: linear-gradient(
-          90deg,
-          var(--green-dark),
-          var(--green),
-          var(--accent)
-        );
-        border-radius: 24px 24px 0 0;
-      }
-      .modal-head {
-        padding: 28px 32px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-      }
-      .modal-head h2 {
-        font-family: "Noto Serif TC", serif;
-        font-size: 1.4rem;
-        font-weight: 700;
-      }
-      .modal-head p {
-        font-size: 0.82rem;
-        color: var(--text-mid);
-        margin-top: 4px;
-      }
-      .modal-close {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        border: none;
-        background: #f0f0f0;
-        cursor: pointer;
-        font-size: 1rem;
-        color: var(--text-mid);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s;
+      .foot-info-row img {
+        width: 16px;
+        height: 16px;
         flex-shrink: 0;
       }
-      .modal-close:hover {
-        background: #e0e0e0;
-        transform: rotate(90deg);
+      .foot-info-row span {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 20px;
+        letter-spacing: -0.15px;
+        white-space: nowrap;
       }
-
-      .modal-body {
-        padding: 0 32px 32px;
+      .foot-hours {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
       }
-      .form-group {
-        margin-bottom: 16px;
+      .foot-h-item {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
       }
-      label {
-        display: block;
-        font-size: 0.82rem;
-        font-weight: 600;
-        margin-bottom: 6px;
-        color: var(--text);
+      .foot-h-item img {
+        width: 16px;
+        height: 16px;
+        margin-top: 2px;
+        flex-shrink: 0;
       }
-      label .req {
-        color: #e53935;
-        margin-left: 3px;
+      .foot-h-day {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 20px;
+        letter-spacing: -0.15px;
       }
-      input,
-      select,
-      textarea {
-        width: 100%;
-        padding: 11px 14px;
-        border: 1.5px solid #e0e0e0;
-        border-radius: 10px;
-        font-family: "Noto Sans TC", sans-serif;
-        font-size: 0.88rem;
-        color: var(--text);
-        background: #fafafa;
-        outline: none;
-        transition: all 0.2s;
-      }
-      input:focus,
-      select:focus,
-      textarea:focus {
-        border-color: var(--green);
-        background: white;
-        box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
-      }
-      textarea {
-        resize: vertical;
-        min-height: 80px;
-      }
-      .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-      }
-
-      .submit-btn {
-        width: 100%;
-        padding: 14px;
-        background: var(--green);
+      .foot-h-time {
+        font-size: 14px;
         color: white;
-        border: none;
-        border-radius: 10px;
-        font-family: "Noto Sans TC", sans-serif;
-        font-size: 0.95rem;
-        font-weight: 600;
-        cursor: pointer;
-        margin-top: 8px;
-        transition: all 0.25s;
-        box-shadow: 0 4px 16px rgba(74, 124, 89, 0.3);
+        line-height: 20px;
+        letter-spacing: -0.15px;
       }
-      .submit-btn:hover:not(:disabled) {
-        background: var(--green-dark);
-        transform: translateY(-1px);
+      .foot-h-closed {
+        font-size: 12px;
+        color: #6a7282;
+        line-height: 16px;
       }
-      .submit-btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
+      .foot-bottom {
+        padding-bottom: 33px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
-
-      .success-view {
-        display: none;
-        text-align: center;
-        padding: 52px 32px;
+      .foot-copy {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 20px;
+        letter-spacing: -0.15px;
       }
-      .success-view .emoji {
-        font-size: 3.5rem;
-        margin-bottom: 16px;
-        display: block;
+      .foot-links {
+        display: flex;
+        gap: 24px;
       }
-      .success-view h3 {
-        font-family: "Noto Serif TC", serif;
-        font-size: 1.3rem;
-        font-weight: 700;
-        margin-bottom: 10px;
+      .foot-links a {
+        font-size: 14px;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.2s;
       }
-      .success-view p {
-        font-size: 0.85rem;
-        color: var(--text-mid);
-        line-height: 1.8;
-      }
-
-      /* ── TOAST ── */
-      .toast {
-        position: fixed;
-        bottom: 28px;
-        right: 28px;
-        z-index: 9999;
-        background: #1a2820;
+      .foot-links a:hover {
         color: white;
-        padding: 12px 20px;
-        border-radius: 10px;
-        font-size: 0.85rem;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        transform: translateY(80px);
-        opacity: 0;
-        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-      .toast.show {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      .toast.error {
-        background: #b71c1c;
       }
 
       /* ── REVEAL ── */
@@ -987,405 +671,482 @@
           opacity 0.65s ease,
           transform 0.65s ease;
       }
-      [data-reveal].revealed {
+      [data-reveal].on {
         opacity: 1;
         transform: none;
       }
-      [data-reveal-delay="1"] {
+      [data-d="1"] {
         transition-delay: 0.1s;
       }
-      [data-reveal-delay="2"] {
+      [data-d="2"] {
         transition-delay: 0.2s;
       }
-      [data-reveal-delay="3"] {
+      [data-d="3"] {
         transition-delay: 0.3s;
       }
 
       /* ── RESPONSIVE ── */
-      @media (max-width: 960px) {
-        .hero-inner,
-        .philosophy-inner,
-        .campus-inner {
-          grid-template-columns: 1fr;
-          gap: 48px;
+      @media (max-width: 1100px) {
+        nav,
+        .section,
+        footer {
+          padding-left: 40px;
+          padding-right: 40px;
         }
-        .hero-image {
-          display: none;
+        .hero-text {
+          left: 40px;
         }
-        .news-grid,
-        .features-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-        .methods-grid {
+        .phil-top {
           grid-template-columns: 1fr;
         }
-        .footer-inner {
+        .phil-img-wrap {
+          height: 320px;
+        }
+        .phil-img {
+          width: 100%;
+          height: 320px;
+          position: relative;
+        }
+        .phil-values {
+          padding-top: 0;
+        }
+        .feat-grid {
           grid-template-columns: 1fr 1fr;
         }
-        .campus::before {
-          display: none;
+        .campus-card {
+          grid-template-columns: 1fr;
         }
-        .campus {
-          background: white;
+        .campus-content {
+          padding: 48px 40px;
+        }
+        .campus-img {
+          height: 400px;
+        }
+        .foot-grid {
+          grid-template-columns: 1fr 1fr;
         }
       }
-      @media (max-width: 640px) {
+      @media (max-width: 768px) {
+        nav {
+          padding: 14px 20px;
+        }
+        .nav-logo {
+          display: none;
+        }
         .nav-links {
           display: none;
         }
-        .news-grid,
-        .features-grid {
+        .hero-line1,
+        .hero-line2 {
+          font-size: 36px;
+          line-height: 48px;
+        }
+        .section {
+          padding: 60px 20px;
+        }
+        .phil-bottom {
+          grid-template-columns: 1fr;
+          padding: 32px;
+        }
+        .feat-grid {
           grid-template-columns: 1fr;
         }
-        .form-row {
+        .foot-grid {
           grid-template-columns: 1fr;
         }
-        .footer-inner {
-          grid-template-columns: 1fr;
+        footer {
+          padding: 48px 20px 0;
         }
-        .footer-bottom {
+        .foot-bottom {
           flex-direction: column;
+          gap: 12px;
           text-align: center;
-        }
-        .hero-stats {
-          gap: 24px;
         }
       }
     </style>
   </head>
   <body>
-    <!-- NAV -->
-    <nav id="navbar">
-      <a class="nav-brand" href="#">
-        <div class="nav-brand-icon">🌱</div>
-        <div class="nav-brand-text">
-          <div class="main">咪咪 & 家田蒙特梭利幼兒園</div>
-          <div class="sub">MImi & Casa Montessori Preschool</div>
-        </div>
-      </a>
+    <!-- NAVBAR -->
+    <nav id="nav" class="transparent">
+      <div class="nav-brand">
+        <div class="nav-brand-main">咪咪 & 家田蒙特梭利幼兒園</div>
+        <div class="nav-brand-sub">MImi & Casa Montessori Preschool</div>
+      </div>
+      <img
+        class="nav-logo"
+        src="https://www.figma.com/api/mcp/asset/fdf383bd-fe06-45e9-9fa2-9e53e5251845"
+        alt="logo"
+      />
       <ul class="nav-links">
-        <li><a href="#news">關於我們</a></li>
-        <li><a href="#methods">課程介紹</a></li>
+        <li><a href="#philosophy">關於我們</a></li>
+        <li><a href="#philosophy">課程介紹</a></li>
         <li><a href="#campus">校園環境</a></li>
-        <li><a href="#news">招生資訊</a></li>
+        <li><a href="#philosophy">招生資訊</a></li>
       </ul>
-      <button class="nav-cta" onclick="openModal()">預約參觀</button>
+      <button class="nav-cta">預約參觀</button>
     </nav>
 
     <!-- HERO -->
     <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-content">
-          <div class="hero-badge" data-reveal>2026年春季招生開放中</div>
-          <h1 data-reveal data-reveal-delay="1">
-            給孩子一個<br />
-            <span class="green">快樂成長</span>的起點
-          </h1>
-          <p class="hero-desc" data-reveal data-reveal-delay="2">
-            在咪咪及家田幼兒園，我們相信每個孩子都是獨一無二的。透過遊戲中學習，培養孩子的創造力、社交能力和自信心。
-          </p>
-          <div class="hero-btns" data-reveal data-reveal-delay="2">
-            <button class="btn-main" onclick="openModal()">
-              立即預約參觀 →
-            </button>
-            <button
-              class="btn-outline"
-              onclick="
-                document
-                  .getElementById('methods')
-                  .scrollIntoView({ behavior: 'smooth' })
-              "
-            >
-              了解課程
-            </button>
-          </div>
-          <div class="hero-stats" data-reveal data-reveal-delay="3">
-            <div class="stat">
-              <h3>30+</h3>
-              <p>年辦學經驗</p>
-            </div>
-            <div class="stat">
-              <h3>80+</h3>
-              <p>在校學生</p>
-            </div>
-            <div class="stat">
-              <h3>98%</h3>
-              <p>家長滿意度</p>
-            </div>
-          </div>
-        </div>
-        <div class="hero-image" data-reveal data-reveal-delay="2">
-          <div class="hero-img-wrap">
-            <div class="hero-img-placeholder">🏫</div>
-          </div>
-          <div class="hero-float-card">
-            <div class="float-icon">🏆</div>
-            <div class="float-text">
-              <div class="num">優質幼兒園</div>
-              <div class="label">教育部認證</div>
-            </div>
-          </div>
+      <img
+        class="hero-bg"
+        src="https://www.figma.com/api/mcp/asset/75a542b4-6948-45f2-9beb-85ac4b0d5010"
+        alt="校園"
+      />
+      <div class="hero-overlay"></div>
+      <div class="hero-text">
+        <div class="hero-line1">這裡是孩子白天的家</div>
+        <div class="hero-line2">
+          孩子成長的<span class="accent">秘密花園</span>
         </div>
       </div>
-    </section>
-
-    <!-- NEWS -->
-    <section class="section news" id="news">
-      <div class="section-inner">
-        <div class="section-header" data-reveal>
-          <div class="section-tag">公告與活動</div>
-          <h2 class="section-title">了解我們最新的活動與重要訊息</h2>
-        </div>
-        <div class="news-grid">
-          <div class="news-card" data-reveal data-reveal-delay="1">
-            <div class="news-date">2026年2月15日</div>
-            <div class="news-icon">📅</div>
-            <div class="news-title">春季開學典禮</div>
-            <p class="news-desc">
-              歡迎新生加入快樂童年大家庭，讓我們一起開啟美好的學習之旅！
-            </p>
-          </div>
-          <div class="news-card" data-reveal data-reveal-delay="2">
-            <div class="news-date">2025年12月20日</div>
-            <div class="news-icon">🏅</div>
-            <div class="news-title">獲得教育部優良獎</div>
-            <p class="news-desc">
-              榮獲2025年度優質幼兒園認證，感謝家長與老師們的支持與努力。
-            </p>
-          </div>
-          <div class="news-card" data-reveal data-reveal-delay="3">
-            <div class="news-date">2026年3月8日</div>
-            <div class="news-icon">🤸</div>
-            <div class="news-title">親子運動會</div>
-            <p class="news-desc">
-              邀請家長與孩子一同參與戶外運動會，增進親子互動與感情。
-            </p>
-          </div>
-        </div>
-      </div>
+      <button class="hero-btn">
+        立即預約參觀
+        <img
+          src="https://www.figma.com/api/mcp/asset/0e35cee8-3e78-4593-9f84-e2eb02ff5803"
+          alt=""
+        />
+      </button>
     </section>
 
     <!-- PHILOSOPHY -->
     <section class="section philosophy" id="philosophy">
-      <div class="section-inner">
-        <div class="section-header" data-reveal>
-          <div class="section-tag">教育理念</div>
-          <h2 class="section-title">我們的教育方針與核心價值</h2>
+      <div class="sec-head" data-reveal>
+        <h2 class="sec-h2">教育理念</h2>
+        <p class="sec-sub">我們的教育方針與核心價值</p>
+      </div>
+      <div class="phil-top">
+        <div class="phil-img-wrap" data-reveal>
+          <div class="phil-deco"></div>
+          <img
+            class="phil-img"
+            src="https://www.figma.com/api/mcp/asset/a6b2fd3c-1278-4013-8796-99dcc2a687fb"
+            alt="教室"
+          />
         </div>
-        <div class="philosophy-inner">
-          <div class="philosophy-img" data-reveal>
-            <div class="philosophy-img-placeholder">🎓</div>
+        <div class="phil-values">
+          <div class="val-item" data-reveal data-d="1">
+            <div class="val-icon">
+              <img
+                src="https://www.figma.com/api/mcp/asset/4a9b0cf0-2991-478e-b695-74362408755a"
+                alt=""
+              />
+            </div>
+            <div>
+              <div class="val-title">愛與關懷</div>
+              <div class="val-desc">
+                以愛為出發點，給予每個孩子溫暖的照顧與陪伴
+              </div>
+            </div>
           </div>
-          <div class="philosophy-values">
-            <div class="value-item" data-reveal data-reveal-delay="1">
-              <div class="value-icon">❤️</div>
-              <div>
-                <div class="value-title">愛與關懷</div>
-                <div class="value-desc">
-                  以愛為出發點，給予每個孩子溫暖的照顧與陪伴
-                </div>
-              </div>
+          <div class="val-item" data-reveal data-d="2">
+            <div class="val-icon">
+              <img
+                src="https://www.figma.com/api/mcp/asset/0763213b-a152-473d-affa-d161142db393"
+                alt=""
+              />
             </div>
-            <div class="value-item" data-reveal data-reveal-delay="2">
-              <div class="value-icon">💡</div>
-              <div>
-                <div class="value-title">啟發思考</div>
-                <div class="value-desc">培養孩子獨立思考與解決問題的能力</div>
-              </div>
+            <div>
+              <div class="val-title">啟發思考</div>
+              <div class="val-desc">培養孩子獨立思考與解決問題的能力</div>
             </div>
-            <div class="value-item" data-reveal data-reveal-delay="2">
-              <div class="value-icon">😊</div>
-              <div>
-                <div class="value-title">快樂學習</div>
-                <div class="value-desc">在遊戲中學習，讓孩子享受探索的樂趣</div>
-              </div>
+          </div>
+          <div class="val-item" data-reveal data-d="2">
+            <div class="val-icon">
+              <img
+                src="https://www.figma.com/api/mcp/asset/40588601-02bb-49f9-923e-3c61a6aff5d4"
+                alt=""
+              />
             </div>
-            <div class="value-item" data-reveal data-reveal-delay="3">
-              <div class="value-icon">🌟</div>
-              <div>
-                <div class="value-title">全人發展</div>
-                <div class="value-desc">重視德智體群美五育均衡發展</div>
-              </div>
+            <div>
+              <div class="val-title">快樂學習</div>
+              <div class="val-desc">在遊戲中學習，讓孩子享受探索的樂趣</div>
+            </div>
+          </div>
+          <div class="val-item" data-reveal data-d="3">
+            <div class="val-icon">
+              <img
+                src="https://www.figma.com/api/mcp/asset/71e18544-a2ac-4b86-8859-9475f11d5097"
+                alt=""
+              />
+            </div>
+            <div>
+              <div class="val-title">全人發展</div>
+              <div class="val-desc">重視德智體群美五育均衡發展</div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- METHODS -->
-    <section class="section methods" id="methods">
-      <div class="section-inner">
-        <div class="section-header" data-reveal>
-          <div class="section-tag">教學法</div>
-          <h2 class="section-title">專業教學，啟發無限潛能</h2>
+      <div class="phil-bottom" data-reveal>
+        <div>
+          <div class="phil-tag">教學法</div>
+          <h3 class="phil-title">蒙特梭利教學法</h3>
+          <p class="phil-desc">
+            我們採用蒙特梭利教學理念，尊重每個孩子的獨特性與發展節奏。透過精心設計的教具與環境，讓孩子在自主探索中建立自信，培養專注力與獨立性。
+          </p>
+          <p class="phil-desc">
+            老師扮演觀察者與引導者的角色，適時給予協助，讓孩子成為學習的主人。
+          </p>
         </div>
-        <div class="methods-grid">
-          <div class="method-card" data-reveal data-reveal-delay="1">
-            <div class="method-tag">教學法</div>
-            <h3 class="method-title">蒙特梭利教學法</h3>
-            <p class="method-desc">
-              我們採用蒙特梭利教學理念，尊重每個孩子的獨特性與發展節奏。透過精心設計的教具與環境，讓孩子在自主探索中建立自信，培養專注力與獨立性。<br /><br />老師扮演觀察者與引導者的角色，適時給予協助，讓孩子成為學習的主人。
-            </p>
-          </div>
-          <div class="method-card" data-reveal data-reveal-delay="2">
-            <div class="method-tag">語言環境</div>
-            <h3 class="method-title">雙語環境</h3>
-            <p class="method-desc">
-              提供中英文雙語學習環境，由專業外籍教師與本地教師共同授課。在日常生活中自然融入英語，培養孩子的語言能力與國際視野。<br /><br />我們相信語言學習應該是有趣且生活化的，讓孩子在歌唱、遊戲與互動中愛上學習。
-            </p>
-          </div>
+        <div>
+          <div class="phil-tag">語言環境</div>
+          <h3 class="phil-title">雙語環境</h3>
+          <p class="phil-desc">
+            提供中英文雙語學習環境，由專業外籍教師與本地教師共同授課。在日常生活中自然融入英語，培養孩子的語言能力與國際視野。
+          </p>
+          <p class="phil-desc">
+            我們相信語言學習應該是有趣且生活化的，讓孩子在歌唱、遊戲與互動中愛上學習。
+          </p>
         </div>
       </div>
     </section>
 
     <!-- FEATURES -->
     <section class="section features" id="features">
-      <div class="section-inner">
-        <div class="section-header" data-reveal>
-          <div class="section-tag">特色與優勢</div>
-          <h2 class="section-title">完善的設施與專業的教學團隊</h2>
+      <div class="sec-head" data-reveal>
+        <h2 class="sec-h2">特色與優勢</h2>
+        <p class="sec-sub">完善的設施與專業的教學團隊</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card" data-reveal data-d="1">
+          <div class="feat-icon">
+            <img
+              src="https://www.figma.com/api/mcp/asset/dcf16755-4d19-4cf9-b712-ba3f8aca4bc6"
+              alt=""
+            />
+          </div>
+          <div class="feat-title">藝術創作</div>
+          <p class="feat-desc">專業美術教室，提供繪畫、手工藝等多元創作活動</p>
         </div>
-        <div class="features-grid">
-          <div class="feature-card" data-reveal data-reveal-delay="1">
-            <div class="feature-icon">🎨</div>
-            <div class="feature-title">藝術創作</div>
-            <p class="feature-desc">
-              專業美術教室，提供繪畫、手工藝等多元創作活動
-            </p>
+        <div class="feat-card" data-reveal data-d="1">
+          <div class="feat-icon">
+            <img
+              src="https://www.figma.com/api/mcp/asset/42d3bbf8-7918-497c-b8bf-62cef59c18a8"
+              alt=""
+            />
           </div>
-          <div class="feature-card" data-reveal data-reveal-delay="1">
-            <div class="feature-icon">🎵</div>
-            <div class="feature-title">音樂律動</div>
-            <p class="feature-desc">
-              豐富的音樂課程，培養孩子的節奏感與音樂素養
-            </p>
+          <div class="feat-title">音樂律動</div>
+          <p class="feat-desc">豐富的音樂課程，培養孩子的節奏感與音樂素養</p>
+        </div>
+        <div class="feat-card" data-reveal data-d="2">
+          <div class="feat-icon">
+            <img
+              src="https://www.figma.com/api/mcp/asset/a1066d86-67e3-481b-8444-529732435872"
+              alt=""
+            />
           </div>
-          <div class="feature-card" data-reveal data-reveal-delay="2">
-            <div class="feature-icon">📚</div>
-            <div class="feature-title">閱讀角落</div>
-            <p class="feature-desc">精選中英文繪本，培養良好的閱讀習慣</p>
+          <div class="feat-title">閱讀角落</div>
+          <p class="feat-desc">精選中英文繪本，培養良好的閱讀習慣</p>
+        </div>
+        <div class="feat-card" data-reveal data-d="2">
+          <div class="feat-icon">
+            <img
+              src="https://www.figma.com/api/mcp/asset/866460bd-368a-4677-a366-a9199a78ac3f"
+              alt=""
+            />
           </div>
-          <div class="feature-card" data-reveal data-reveal-delay="2">
-            <div class="feature-icon">🥗</div>
-            <div class="feature-title">營養餐點</div>
-            <p class="feature-desc">專業營養師設計菜單，使用有機食材烹調</p>
+          <div class="feat-title">營養餐點</div>
+          <p class="feat-desc">專業營養師設計菜單，使用有機食材烹調</p>
+        </div>
+        <div class="feat-card" data-reveal data-d="3">
+          <div class="feat-icon">
+            <img
+              src="https://www.figma.com/api/mcp/asset/0297a763-bfd5-41b3-b5e2-6506dcfd78ca"
+              alt=""
+            />
           </div>
-          <div class="feature-card" data-reveal data-reveal-delay="3">
-            <div class="feature-icon">🛡️</div>
-            <div class="feature-title">安全環境</div>
-            <p class="feature-desc">
-              全方位監控系統，確保孩子在安全的環境中成長
-            </p>
+          <div class="feat-title">安全環境</div>
+          <p class="feat-desc">全方位監控系統，確保孩子在安全的環境中成長</p>
+        </div>
+        <div class="feat-card" data-reveal data-d="3">
+          <div class="feat-icon">
+            <img
+              src="https://www.figma.com/api/mcp/asset/6cd950bf-b569-483d-b803-38b3d6a95c9d"
+              alt=""
+            />
           </div>
-          <div class="feature-card" data-reveal data-reveal-delay="3">
-            <div class="feature-icon">🌳</div>
-            <div class="feature-title">戶外活動</div>
-            <p class="feature-desc">寬敞的戶外遊戲區，讓孩子盡情探索大自然</p>
-          </div>
+          <div class="feat-title">戶外活動</div>
+          <p class="feat-desc">寬敞的戶外遊戲區，讓孩子盡情探索大自然</p>
         </div>
       </div>
-    </section>
 
-    <!-- CAMPUS -->
-    <section class="campus" id="campus">
-      <div class="campus-inner">
-        <div class="campus-content" data-reveal>
+      <div class="campus-head" data-reveal>
+        <h2 class="sec-h2">校園環境</h2>
+      </div>
+      <div class="campus-card" id="campus" data-reveal>
+        <div class="campus-content">
           <div class="campus-tag">Campus</div>
-          <h2 class="campus-title">優質校園環境</h2>
+          <h3 class="campus-h3">優質校園環境</h3>
           <ul class="campus-list">
             <li>
-              <div class="check">✓</div>
+              <div class="check">
+                <img
+                  src="https://www.figma.com/api/mcp/asset/e2774897-9936-4253-ada5-6d5692673e17"
+                  alt=""
+                />
+              </div>
               <div>
-                <div class="check-title">寬敞明亮的教室</div>
-                <div class="check-desc">
+                <div class="check-t">寬敞明亮的教室</div>
+                <div class="check-d">
                   每間教室都有充足的自然採光與良好的通風
                 </div>
               </div>
             </li>
             <li>
-              <div class="check">✓</div>
+              <div class="check">
+                <img
+                  src="https://www.figma.com/api/mcp/asset/e2774897-9936-4253-ada5-6d5692673e17"
+                  alt=""
+                />
+              </div>
               <div>
-                <div class="check-title">專業遊樂設施</div>
-                <div class="check-desc">符合國際安全標準的戶外遊戲設備</div>
+                <div class="check-t">專業遊樂設施</div>
+                <div class="check-d">符合國際安全標準的戶外遊戲設備</div>
               </div>
             </li>
             <li>
-              <div class="check">✓</div>
+              <div class="check">
+                <img
+                  src="https://www.figma.com/api/mcp/asset/e2774897-9936-4253-ada5-6d5692673e17"
+                  alt=""
+                />
+              </div>
               <div>
-                <div class="check-title">綠意盎然的環境</div>
-                <div class="check-desc">
-                  校園內種植多種植物，讓孩子親近大自然
-                </div>
+                <div class="check-t">綠意盎然的環境</div>
+                <div class="check-d">校園內種植多種植物，讓孩子親近大自然</div>
               </div>
             </li>
           </ul>
-          <button class="btn-main" onclick="openModal()">查看校園環境</button>
+          <button class="campus-btn">查看校園環境</button>
         </div>
-        <div class="campus-img" data-reveal data-reveal-delay="2">
-          <div class="campus-img-placeholder">🌿</div>
-        </div>
+        <img
+          class="campus-img"
+          src="https://www.figma.com/api/mcp/asset/ec019b37-b160-4aaf-8c80-7d7c87f83702"
+          alt="校園"
+        />
       </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <div class="logo-row">
-            <div class="footer-logo-icon">🌱</div>
-            <div class="footer-logo-text">
-              <div class="main">咪咪 & 家田蒙特梭利幼兒園</div>
-              <div class="sub">MImi & Casa Montessori Preschool</div>
+      <div class="foot-grid">
+        <div>
+          <div class="foot-brand-row">
+            <img
+              class="foot-logo"
+              src="https://www.figma.com/api/mcp/asset/be458974-1aa1-49eb-9b46-5b6f7e03c9a6"
+              alt="logo"
+            />
+            <div>
+              <div class="foot-name">咪咪 & 家田蒙特梭利幼兒園</div>
+              <div class="foot-sub">MImi & Casa Montessori Preschool</div>
             </div>
           </div>
-          <p>給孩子一個快樂成長的起點，培養未來的無限可能。</p>
-          <div class="footer-social">
-            <div class="social-btn">📘</div>
-            <div class="social-btn">📷</div>
-            <div class="social-btn">▶️</div>
+          <p class="foot-tagline">
+            給孩子一個快樂成長的起點，培養未來的無限可能。
+          </p>
+          <div class="foot-social">
+            <div class="soc-btn">
+              <img
+                src="https://www.figma.com/api/mcp/asset/f6670928-1d2a-4b5e-a065-2dbcbed54313"
+                alt="FB"
+              />
+            </div>
+            <div class="soc-btn">
+              <img
+                src="https://www.figma.com/api/mcp/asset/d764fe9f-cf02-4aa7-9c0d-26462aafcf17"
+                alt="IG"
+              />
+            </div>
+            <div class="soc-btn">
+              <img
+                src="https://www.figma.com/api/mcp/asset/d13a0b75-7b1b-4059-a8bf-d13a7ed84f48"
+                alt="YT"
+              />
+            </div>
           </div>
         </div>
-        <div class="footer-col">
-          <div class="footer-col-tag">校區</div>
-          <h4>咪咪蒙特梭利幼兒園</h4>
-          <address>
-            嘉義市東區中山路123號<br />
-            (05) 1234-5678<br />
-            east@happykids.edu.tw
-          </address>
+        <div>
+          <div class="foot-col-label">校區</div>
+          <div class="foot-col-name">咪咪蒙特梭利幼兒園</div>
+          <div class="foot-info-list">
+            <div class="foot-info-row">
+              <img
+                src="https://www.figma.com/api/mcp/asset/f0ad9baf-99bf-49a3-b56e-1d0560a2a22d"
+                alt=""
+              /><span>嘉義市東區中山路123號</span>
+            </div>
+            <div class="foot-info-row">
+              <img
+                src="https://www.figma.com/api/mcp/asset/b383f43c-e3c4-44b6-a6d2-3ee675c4c43c"
+                alt=""
+              /><span>(05) 1234-5678</span>
+            </div>
+            <div class="foot-info-row">
+              <img
+                src="https://www.figma.com/api/mcp/asset/8091ac0e-95a6-442d-bc7f-480a191cb9ad"
+                alt=""
+              /><span>east@happykids.edu.tw</span>
+            </div>
+          </div>
         </div>
-        <div class="footer-col">
-          <div class="footer-col-tag">校區</div>
-          <h4>家田蒙特梭利幼兒園</h4>
-          <address>
-            嘉義市西區民族路456號<br />
-            (05) 8765-4321<br />
-            west@happykids.edu.tw
-          </address>
+        <div>
+          <div class="foot-col-label" style="opacity: 0">校區</div>
+          <div class="foot-col-name">家田蒙特梭利幼兒園</div>
+          <div class="foot-info-list">
+            <div class="foot-info-row">
+              <img
+                src="https://www.figma.com/api/mcp/asset/f0ad9baf-99bf-49a3-b56e-1d0560a2a22d"
+                alt=""
+              /><span>嘉義市西區民族路456號</span>
+            </div>
+            <div class="foot-info-row">
+              <img
+                src="https://www.figma.com/api/mcp/asset/b383f43c-e3c4-44b6-a6d2-3ee675c4c43c"
+                alt=""
+              /><span>(05) 8765-4321</span>
+            </div>
+            <div class="foot-info-row">
+              <img
+                src="https://www.figma.com/api/mcp/asset/8091ac0e-95a6-442d-bc7f-480a191cb9ad"
+                alt=""
+              /><span>west@happykids.edu.tw</span>
+            </div>
+          </div>
         </div>
-        <div class="footer-col">
-          <div class="footer-col-tag">服務時間</div>
-          <h4>週一至週五</h4>
-          <p>07:30 – 18:00</p>
-          <h4 style="margin-top: 14px">週六</h4>
-          <p>08:00 – 12:00</p>
-          <p
-            style="
-              margin-top: 8px;
-              font-size: 0.75rem;
-              color: rgba(255, 255, 255, 0.3);
-            "
-          >
-            週日及國定假日休息
-          </p>
+        <div>
+          <div class="foot-col-label">服務時間</div>
+          <div class="foot-hours">
+            <div class="foot-h-item">
+              <img
+                src="https://www.figma.com/api/mcp/asset/bbd4b4d7-924f-46c8-905a-303e33417d15"
+                alt=""
+              />
+              <div>
+                <div class="foot-h-day">週一至週五</div>
+                <div class="foot-h-time">07:30 - 18:00</div>
+              </div>
+            </div>
+            <div class="foot-h-item">
+              <img
+                src="https://www.figma.com/api/mcp/asset/bbd4b4d7-924f-46c8-905a-303e33417d15"
+                alt=""
+              />
+              <div>
+                <div class="foot-h-day">週六</div>
+                <div class="foot-h-time">08:00 - 12:00</div>
+              </div>
+            </div>
+            <div class="foot-h-closed">週日及國定假日休息</div>
+          </div>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span
-          >© 2026 咪咪 & 家田蒙特梭利幼兒園 MImi & Casa Montessori Preschool.
-          All rights reserved.</span
-        >
-        <div class="footer-bottom-links">
+      <div class="foot-bottom">
+        <p class="foot-copy">
+          © 2026 咪咪 & 家田蒙特梭利幼兒園 MImi & Casa Montessori Preschool. All
+          rights reserved.
+        </p>
+        <div class="foot-links">
           <a href="#">隱私政策</a>
           <a href="#">服務條款</a>
           <a href="#">網站地圖</a>
@@ -1393,256 +1154,34 @@
       </div>
     </footer>
 
-    <!-- MODAL -->
-    <div
-      class="modal-overlay"
-      id="modalOverlay"
-      onclick="handleOverlayClick(event)"
-    >
-      <div class="modal">
-        <div class="modal-top"></div>
-        <div id="formView">
-          <div class="modal-head">
-            <div>
-              <h2>📋 預約參觀</h2>
-              <p>請填寫以下資料，我們將盡快與您聯繫</p>
-            </div>
-            <button class="modal-close" onclick="closeModal()">✕</button>
-          </div>
-          <div class="modal-body">
-            <form id="regForm" onsubmit="handleSubmit(event)">
-              <div class="form-row">
-                <div class="form-group">
-                  <label>孩子姓名<span class="req">*</span></label>
-                  <input
-                    type="text"
-                    name="child_name"
-                    placeholder="請輸入孩子姓名"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label>出生年月日<span class="req">*</span></label>
-                  <input type="date" name="child_birthday" required />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>性別<span class="req">*</span></label>
-                  <select name="child_gender" required>
-                    <option value="">請選擇</option>
-                    <option>男生</option>
-                    <option>女生</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>欲參觀校區<span class="req">*</span></label>
-                  <select name="campus" required>
-                    <option value="">請選擇</option>
-                    <option>咪咪蒙特梭利幼兒園（東區）</option>
-                    <option>家田蒙特梭利幼兒園（西區）</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>家長姓名<span class="req">*</span></label>
-                  <input
-                    type="text"
-                    name="parent_name"
-                    placeholder="請輸入家長姓名"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label>聯絡電話<span class="req">*</span></label>
-                  <input
-                    type="tel"
-                    name="parent_phone"
-                    placeholder="09XX-XXXXXX"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label>電子郵件</label>
-                <input
-                  type="email"
-                  name="parent_email"
-                  placeholder="your@email.com"
-                />
-              </div>
-              <div class="form-group">
-                <label>備註 / 希望參觀時段</label>
-                <textarea
-                  name="notes"
-                  placeholder="請說明希望的參觀時間或任何問題..."
-                ></textarea>
-              </div>
-              <button type="submit" class="submit-btn" id="submitBtn">
-                送出預約申請
-              </button>
-            </form>
-          </div>
-        </div>
-        <div class="success-view" id="successView">
-          <span class="emoji">🎉</span>
-          <h3>預約申請已送出！</h3>
-          <p>
-            感謝您的預約，我們已收到您的資料。<br />園方將在
-            <strong>24小時內</strong> 以電話聯繫您確認參觀時間。
-          </p>
-          <button
-            class="btn-main"
-            style="margin: 24px auto 0; display: inline-flex"
-            onclick="closeModal()"
-          >
-            關閉
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="toast" id="toast"></div>
-
     <script>
-      // EmailJS config — replace with real keys
-      const EJ_KEY = "YOUR_PUBLIC_KEY";
-      const EJ_SERVICE = "YOUR_SERVICE_ID";
-      const EJ_TEMPLATE = "YOUR_TEMPLATE_ID";
-
-      // Nav scroll effect
-      window.addEventListener("scroll", () => {
-        document
-          .getElementById("navbar")
-          .classList.toggle("scrolled", window.scrollY > 20);
-      });
+      // Navbar transparent ↔ solid on scroll
+      const nav = document.getElementById("nav");
+      function updateNav() {
+        if (window.scrollY > 60) {
+          nav.classList.replace("transparent", "solid");
+        } else {
+          nav.classList.replace("solid", "transparent");
+        }
+      }
+      window.addEventListener("scroll", updateNav, { passive: true });
+      updateNav();
 
       // Scroll reveal
-      const ro = new IntersectionObserver(
+      const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
             if (e.isIntersecting) {
-              e.target.classList.add("revealed");
-              ro.unobserve(e.target);
+              e.target.classList.add("on");
+              observer.unobserve(e.target);
             }
           });
         },
-        { threshold: 0.12 },
+        { threshold: 0.1 },
       );
       document
         .querySelectorAll("[data-reveal]")
-        .forEach((el) => ro.observe(el));
-
-      // Modal
-      function openModal() {
-        document.getElementById("modalOverlay").classList.add("active");
-        document.body.style.overflow = "hidden";
-      }
-      function closeModal() {
-        document.getElementById("modalOverlay").classList.remove("active");
-        document.body.style.overflow = "";
-        setTimeout(() => {
-          document.getElementById("formView").style.display = "";
-          document.getElementById("successView").style.display = "none";
-          document.getElementById("regForm").reset();
-          const btn = document.getElementById("submitBtn");
-          btn.disabled = false;
-          btn.textContent = "送出預約申請";
-        }, 350);
-      }
-      function handleOverlayClick(e) {
-        if (e.target === document.getElementById("modalOverlay")) closeModal();
-      }
-
-      // Storage
-      const SK = "mimicasa_registrations";
-      function getRegs() {
-        try {
-          return JSON.parse(localStorage.getItem(SK)) || [];
-        } catch {
-          return [];
-        }
-      }
-      function saveReg(d) {
-        const l = getRegs();
-        l.push({ ...d, time: new Date().toLocaleString("zh-TW") });
-        localStorage.setItem(SK, JSON.stringify(l));
-        return l;
-      }
-      function buildHistory(list) {
-        if (!list.length) return "（尚無歷史報名資料）";
-        return list
-          .map(
-            (r, i) =>
-              `${i + 1}. [${r.time}] ${r.child_name} / ${r.child_gender} / 生日:${r.child_birthday} / 校區:${r.campus} / 家長:${r.parent_name} / 電話:${r.parent_phone} / Email:${r.parent_email || "未填"} / 備註:${r.notes || "無"}`,
-          )
-          .join("\n");
-      }
-
-      // Toast
-      function toast(msg, err) {
-        const t = document.getElementById("toast");
-        t.textContent = msg;
-        t.className = "toast" + (err ? " error" : "");
-        setTimeout(() => t.classList.add("show"), 10);
-        setTimeout(() => t.classList.remove("show"), 4000);
-      }
-
-      // Submit
-      async function handleSubmit(e) {
-        e.preventDefault();
-        const f = e.target;
-        const btn = document.getElementById("submitBtn");
-        btn.disabled = true;
-        btn.textContent = "傳送中…";
-
-        const data = {
-          child_name: f.child_name.value.trim(),
-          child_birthday: f.child_birthday.value,
-          child_gender: f.child_gender.value,
-          campus: f.campus.value,
-          parent_name: f.parent_name.value.trim(),
-          parent_phone: f.parent_phone.value.trim(),
-          parent_email: f.parent_email.value.trim(),
-          notes: f.notes.value.trim(),
-        };
-
-        const allRegs = saveReg(data);
-
-        try {
-          if (EJ_KEY === "YOUR_PUBLIC_KEY") {
-            await new Promise((r) => setTimeout(r, 1000));
-            console.log("📧 [Demo] Would send:", {
-              ...data,
-              history: buildHistory(allRegs),
-            });
-          } else {
-            await emailjs.send(EJ_SERVICE, EJ_TEMPLATE, {
-              to_email: "1354ark@gmail.com",
-              ...data,
-              parent_email: data.parent_email || "未填",
-              notes: data.notes || "無",
-              submit_time: new Date().toLocaleString("zh-TW"),
-              history_list: buildHistory(allRegs),
-              total_count: allRegs.length,
-            });
-          }
-          document.getElementById("formView").style.display = "none";
-          document.getElementById("successView").style.display = "block";
-        } catch (err) {
-          console.error(err);
-          toast("❌ 送出失敗，請稍後再試", true);
-          btn.disabled = false;
-          btn.textContent = "送出預約申請";
-        }
-      }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>
-      if (typeof emailjs !== "undefined" && EJ_KEY !== "YOUR_PUBLIC_KEY") {
-        emailjs.init({ publicKey: EJ_KEY });
-      }
+        .forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>
